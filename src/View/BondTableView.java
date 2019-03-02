@@ -81,6 +81,7 @@ public class BondTableView extends Scene {
         vbox.setPadding(new Insets(10, 0, 0, 10));
         vbox.getChildren().addAll(title, bondtable);
 
+        ((Group) this.getRoot()).getChildren().addAll(vbox);
     }
 
 
