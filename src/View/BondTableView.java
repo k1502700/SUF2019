@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -76,12 +77,13 @@ public class BondTableView extends Scene {
         bondtable.setItems(data);
         bondtable.getColumns().addAll(bondName, bondValue, bondIRR, bondDuration, bondResale, bondProjection);
 
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(title, bondtable);
+         BorderPane bp = new BorderPane();
+         bp.setCenter(bondtable);
+        bp.setTop(title);
 
-        ((Group) this.getRoot()).getChildren().addAll(vbox);
+        ((Group) this.getRoot()).getChildren().addAll(bp);
+
+
     }
 
 

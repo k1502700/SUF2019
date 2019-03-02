@@ -1,7 +1,5 @@
 package Model;
 
-import javafx.beans.property.StringProperty;
-
 /**
  * Created by robert on 2019. 03. 02..
  */
