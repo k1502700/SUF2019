@@ -31,6 +31,8 @@ public class XMLConverter {
 
         table = (Table) xStream.fromXML(input);
 
+
+
 //        Cell cell1 = new Cell("1");
 //        Cell cell2 = new Cell("2");
 //        Cell cell3 = new Cell("3");
@@ -55,6 +57,9 @@ public class XMLConverter {
 //
 //        System.out.println(xStream.toXML(table1));
 
+
+
+
     }
 
 
@@ -63,6 +68,7 @@ public class XMLConverter {
         return new String(encoded, encoding);
     }
 
-
-
+    public Table getTable() {
+        return table;
+    }
 }

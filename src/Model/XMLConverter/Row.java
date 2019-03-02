@@ -38,4 +38,41 @@ public class Row {
 //    public void addCell(Cell cell){
 //        cells.add(cell);
 //    }
+
+
+    public String getA() {
+        return a;
+    }
+
+    public String getB() {
+        return b;
+    }
+
+    public String getC() {
+        return c;
+    }
+
+    public String getD() {
+        return d;
+    }
+
+    public String getE() {
+        return e;
+    }
+
+    public String getF() {
+        return f;
+    }
+
+    public String getG() {
+        return g;
+    }
+
+    public String getH() {
+        return h;
+    }
+
+    public String getI() {
+        return i;
+    }
 }

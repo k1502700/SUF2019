@@ -17,4 +17,8 @@ public class Table {
     public void addRow(Row row){
         rows.add(row);
     }
+
+    public ArrayList<Row> getRows() {
+        return rows;
+    }
 }
