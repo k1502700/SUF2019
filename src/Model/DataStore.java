@@ -20,12 +20,12 @@ public class DataStore {
 
     private ArrayList<Double> couponList = new ArrayList<>();
 
-    private ArrayList<String> valueList = new ArrayList<>();
-    private ArrayList<String> irrList = new ArrayList<>();
-    private ArrayList<String> durationList = new ArrayList<>();
-    private ArrayList<String> resaleList = new ArrayList<>();
-    private ArrayList<String> projection1List = new ArrayList<>();
-    private ArrayList<String> projection2List = new ArrayList<>();
+    private ArrayList<String> valueList = new ArrayList<>();//todo: needs to be calculated
+    private ArrayList<String> irrList = new ArrayList<>();//todo: needs to be calculated
+    private ArrayList<String> durationList = new ArrayList<>();//todo: needs to be calculated
+    private ArrayList<String> resaleList = new ArrayList<>();//todo: needs to be calculated
+    private ArrayList<String> projection1List = new ArrayList<>();//todo: needs to be calculated
+    private ArrayList<String> projection2List = new ArrayList<>();//todo: needs to be calculated
 
 //
 //    ArrayList<String> bondName;
@@ -54,22 +54,37 @@ public class DataStore {
             modifiedDurationList.add(row.getI());
 
             String couponS = row.getA().split(" ")[0];
-            Double couponD = 0.0;
             try {
-
-                couponD = Double.valueOf(couponS.replace("%", ""));
+                Double couponD = Double.valueOf(couponS.replace("%", ""));
                 couponList.add(couponD);
-
             }
             catch (NumberFormatException e){
                 couponList.add(0.0);
             }
+
+            valueList .add("0");//todo: needs to be added
+            irrList.add("0");
+            durationList.add("0");
+            resaleList.add("0");
+            projection1List.add("0");
+            projection2List.add("0");
+
         }
 
         System.out.println();
     }
 
 
+    public ArrayList<DisplayBond> getDisplayBonds(){
+
+        ArrayList<DisplayBond> bondList = new ArrayList<>();
+
+        for (int i = 0; i < nameList.size(); i++){
+            bondList.add(new DisplayBond(nameList.get(i), valueList.get(i), irrList.get(i), durationList.get(i), resaleList.get(i), projection1List.get(i), projection2List.get(i)));
+        }
+
+        return bondList;
+    }
 
 
 }

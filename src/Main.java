@@ -1,3 +1,4 @@
+import Model.DataStore;
 import View.BondTableView;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -6,10 +7,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    DataStore dataStore = new DataStore();
 
-    BondTableView scene = new BondTableView(new Group());
+    BondTableView scene = new BondTableView(new Group(), dataStore);
 
     public static void main   (String[] args) {
+
         launch(args);
     }
 

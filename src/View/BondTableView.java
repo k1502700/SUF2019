@@ -1,5 +1,6 @@
 package View;
 
+import Model.DataStore;
 import Model.DisplayBond;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
@@ -32,8 +33,11 @@ public class BondTableView extends Scene {
 
     final HBox hb = new HBox();
 
-    public BondTableView(@NamedArg("root") Parent root) {
+    public BondTableView(@NamedArg("root") Parent root, DataStore dataStore) {
         super(root);
+
+        data.removeAll(data);
+        data.addAll(dataStore.getDisplayBonds());
 
         final Label title = new Label("List of Bonds");
 
