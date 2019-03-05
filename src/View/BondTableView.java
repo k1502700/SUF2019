@@ -37,7 +37,7 @@ public class BondTableView extends Scene {
         super(root);
 
         data.removeAll(data);
-        data.addAll(dataStore.getDisplayBonds());
+        data.addAll(dataStore.getDisplayBonds());//todo: <--this method gets the bonds
 
         final Label title = new Label("List of Bonds");
 
