@@ -89,9 +89,7 @@ public class DataStore {
         ArrayList<DisplayBond> bondList = new ArrayList<>();
 
         for (int i = 0; i < nameList.size(); i++){
-            Bond bond = new Bond(redemptionDateList.get(i));
-
-            bondList.add(new DisplayBond(nameList.get(i), dateFormat.format(closeOfBusinessDateList.get(i)), dateFormat.format(redemptionDateList.get(i)), Integer.toString(bond.calculateTermsRemainingToday()), resaleList.get(i), projection1List.get(i), projection2List.get(i)));
+            bondList.add(new DisplayBond(nameList.get(i), valueList.get(i), irrList.get(i), durationList.get(i), resaleList.get(i), projection1List.get(i), projection2List.get(i)));
         }
 
         return bondList;
