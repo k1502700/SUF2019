@@ -45,9 +45,7 @@ public class Bond {
         int terms = 0;
 
         if (date.after(redemptionDate)){
-            System.out.println("redemption date before today");
             return 0;
-//            throw new IllegalArgumentException("Date after redemption date!");
         }
 
         String[] datePartsS = dateFormat.format(date).split("/");
@@ -104,7 +102,6 @@ public class Bond {
             terms += (redemptionYear - targetYear) * 2;
         }
 
-        System.out.print("");
         return terms;
     }
 
