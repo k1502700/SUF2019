@@ -14,7 +14,7 @@ public class DataStore {
     private ArrayList<String> isinList = new ArrayList<>();
     private ArrayList<Date> redemptionDateList = new ArrayList<>();
     private ArrayList<Date> closeOfBusinessDateList = new ArrayList<>();
-    private ArrayList<String> CleanPriceList = new ArrayList<>();
+    private ArrayList<String> cleanPriceList = new ArrayList<>();
     private ArrayList<String> dirtyPriceList = new ArrayList<>();
     private ArrayList<String> accruedInterestList = new ArrayList<>();
     private ArrayList<String> yieldList = new ArrayList<>();
@@ -49,7 +49,7 @@ public class DataStore {
                 redemptionDateList.add(new Date());
                 closeOfBusinessDateList.add(new Date());
             }
-            CleanPriceList.add(row.getE());
+            cleanPriceList.add(row.getE());
             dirtyPriceList.add(row.getF());
             accruedInterestList.add(row.getG());
             yieldList.add(row.getH());
@@ -77,10 +77,7 @@ public class DataStore {
             resaleList.add("0");
             projection1List.add("0");
             projection2List.add("0");
-
         }
-
-        System.out.println();
     }
 
 
