@@ -22,7 +22,7 @@ public class Main extends Application {
         primaryStage.setTitle("MR.BOND");
         final Label title = new Label("List of Bonds");
 
-        primaryStage.setWidth(1000);
+        primaryStage.setWidth(1200);
         primaryStage.setHeight(600);
 
         primaryStage.setScene(scene);
