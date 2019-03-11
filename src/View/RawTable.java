@@ -30,32 +30,24 @@ public class RawTable extends VBox {
 
         TableColumn bondValue = new TableColumn("Redemption Date");
         bondValue.setCellValueFactory(
-                new PropertyValueFactory<DisplayBond, String>("value"));
+                new PropertyValueFactory<DisplayBond, String>("redemptiondate"));
 
         TableColumn bondIRR = new TableColumn("End Date");
         bondIRR.setCellValueFactory(
-                new PropertyValueFactory<DisplayBond, String>("irr"));
+                new PropertyValueFactory<DisplayBond, String>("enddate"));
 
         TableColumn bondDuration = new TableColumn("Clean Price");
         bondDuration.setCellValueFactory(
-                new PropertyValueFactory<DisplayBond, String>("duration"));
+                new PropertyValueFactory<DisplayBond, String>("cleanprice"));
 
         TableColumn bondResale = new TableColumn("Interest");
         bondResale.setCellValueFactory(
-                new PropertyValueFactory<DisplayBond, String>("resale"));
+                new PropertyValueFactory<DisplayBond, String>("interest"));
 
+        TableColumn coupon = new TableColumn("Coupon");
+        bondResale.setCellValueFactory(
+                new PropertyValueFactory<DisplayBond, String>("coupon"));
 
-        TableColumn bondProjection = new TableColumn("Interest Projection");
-
-        TableColumn firstYearProjection = new TableColumn("Primary");
-        firstYearProjection.setCellValueFactory(
-                new PropertyValueFactory<DisplayBond, String>("projection1"));
-
-        TableColumn secondYearProjection = new TableColumn("Secondary");
-        secondYearProjection.setCellValueFactory(
-                new PropertyValueFactory<DisplayBond, String>("projection2"));
-
-        bondProjection.getColumns().addAll(firstYearProjection, secondYearProjection);
 
 
         bondtable.setPrefHeight(500);
@@ -63,7 +55,7 @@ public class RawTable extends VBox {
 
 
         bondtable.setItems(data);
-        bondtable.getColumns().addAll(idname,bondName, bondValue, bondIRR, bondDuration, bondResale, bondProjection);
+        bondtable.getColumns().addAll(idname,bondName, bondValue, bondIRR, bondDuration, bondResale, coupon);
 
         this.getChildren().add(bondtable);
 

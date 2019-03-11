@@ -124,5 +124,16 @@ public class DataStore {
         return new DisplayBond(idList.get(id).toString() , nameList.get(id), disvalueList.get(id), contvalueList.get(id), irrList.get(id), durationList.get(id), resaleList.get(id), projection1List.get(id), projection2List.get(id));
     }
 
+    public ArrayList<DisplayBond> getRawBonds() {
+
+        ArrayList<DisplayBond> bondList = new ArrayList<>();
+
+        for (int i = 0; i < nameList.size(); i++) {
+            bondList.add(new DisplayBond(idList.get(i).toString(),nameList.get(i), redemptionDateList.get(i).toString(),closeOfBusinessDateList.get(i).toString(),cleanPriceList.get(i), accruedInterestList.get(i), couponList.get(i).toString()));
+        }
+
+        return bondList;
+    }
+
 
 }

@@ -15,6 +15,13 @@ public class DisplayBond {
     private String resale;
     private String projection1;
     private String projection2;
+    private String redemptiondate;
+    private String enddate;
+    private String cleanprice;
+    private String interest;
+    private String coupon;
+
+
 
     public DisplayBond(String id,String name, String disvalue, String contvalue, String irr, String duration, String resale, String projection1, String projection2) {
         this.id = id;
@@ -26,6 +33,36 @@ public class DisplayBond {
         this.resale = resale;
         this.projection1 = projection1;
         this.projection2 = projection2;
+    }
+
+    public DisplayBond(String id, String name, String redemptiondate, String enddate, String cleanprice, String interest, String coupon) {
+        this.id = id;
+        this.name = name;
+        this.redemptiondate = redemptiondate;
+        this.enddate = enddate;
+        this.cleanprice = cleanprice;
+        this.interest = interest;
+        this.coupon = coupon;
+    }
+
+    public String getRedemptiondate() {
+        return redemptiondate;
+    }
+
+    public String getEnddate() {
+        return enddate;
+    }
+
+    public String getCleanprice() {
+        return cleanprice;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public String getCoupon() {
+        return coupon;
     }
 
     public String getId(){ return id;}

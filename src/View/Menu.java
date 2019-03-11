@@ -1,5 +1,9 @@
 package View;
 
+import Model.DisplayBond;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,9 +28,9 @@ public class Menu extends VBox {
 
     DatePicker datePicker;
 
-    Scene scene;
+    BondTableView scene;
 
-    public Menu(Scene scene) {
+    public Menu(BondTableView scene) {
 
         this.scene = scene;
 
@@ -37,11 +41,21 @@ public class Menu extends VBox {
         Button database = new Button("Database");
         Button details = new Button("Details");
 
+        database.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                scene.setRaw();
+            }
+        });
 
-
+        details.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                scene.setDB();
+            }
+        });
 
         vbox.getChildren().addAll(database,details);
-
 
         this.getChildren().add(vbox);
 

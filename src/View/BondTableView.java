@@ -28,17 +28,24 @@ public class BondTableView extends Scene {
 
 
     private DetailsTable detailsTable = new DetailsTable();
+    private RawTable rawTable = new RawTable();
+    private BorderPane bp;
+    DataStore dataStore;
 
 
     public BondTableView(@NamedArg("root") Parent root, DataStore dataStore) {
         super(root);
 
+        this.dataStore = dataStore;
+
         detailsTable.setContent(dataStore.getDisplayBonds());
+
+        rawTable.setContent(dataStore.getRawBonds());
 
         final Label title = new Label("List of Bonds");
 
 
-        BorderPane bp = new BorderPane();
+        bp = new BorderPane();
         bp.setCenter(detailsTable);
         bp.setTop(title);
 
@@ -57,28 +64,28 @@ public class BondTableView extends Scene {
         Button button3 = new Button("Graph");
 
         button3.setOnAction(new EventHandler<ActionEvent>() {
-                                public void handle(ActionEvent event) {
-                                    Stage stage = new Stage();
-                                    stage.setTitle("My New Stage Title");
-                                    GraphScene graphScene = new GraphScene(new Group());
-                                    stage.setScene(graphScene);
-                                    stage.show();
-                                }
-                            });
+            public void handle(ActionEvent event) {
+                Stage stage = new Stage();
+                stage.setTitle("My New Stage Title");
+                GraphScene graphScene = new GraphScene(new Group());
+                stage.setScene(graphScene);
+                stage.show();
+            }
+        });
 
-                button2.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
 
-                        ObservableList selectedItems = detailsTable.getTable().getSelectionModel().getSelectedItems();
+                ObservableList selectedItems = detailsTable.getTable().getSelectionModel().getSelectedItems();
 
-                        for (int i = 0; i < selectedItems.size(); i++) {
-                            DisplayBond displayBond = (DisplayBond) selectedItems.get(i);
-                            System.out.println(displayBond.getName());
-                        }
+                for (int i = 0; i < selectedItems.size(); i++) {
+                    DisplayBond displayBond = (DisplayBond) selectedItems.get(i);
+                    System.out.println(displayBond.getName());
+                }
 
-                    }
-                });
+            }
+        });
 
         HBox botbuts = new HBox();
 
@@ -90,6 +97,16 @@ public class BondTableView extends Scene {
         ((Group) this.getRoot()).getChildren().addAll(bp);
 
 
+    }
+
+    public void setDB(){
+        bp.setCenter(detailsTable);
+        detailsTable.setContent(dataStore.getDisplayBonds());
+    }
+
+    public void setRaw(){
+        bp.setCenter(rawTable);
+        rawTable.setContent(dataStore.getRawBonds());
     }
 
 
