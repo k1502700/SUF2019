@@ -4,6 +4,7 @@ import Model.XMLConverter.Row;
 import Model.XMLConverter.Table;
 import Model.XMLConverter.XMLConverter;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class DataStore {
     private ArrayList<String> accruedInterestList = new ArrayList<>();
     private ArrayList<String> yieldList = new ArrayList<>();
     private ArrayList<String> modifiedDurationList = new ArrayList<>();
-    private ArrayList<Boolean> isIndexLinked = new ArrayList<>();
+    private ArrayList<Boolean> isIndexLinkedList = new ArrayList<>();
 
     private ArrayList<Double> couponList = new ArrayList<>();
 
@@ -34,48 +35,64 @@ public class DataStore {
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 
-    public DataStore(){
+    public DataStore() {
 
         XMLConverter xc = new XMLConverter();
         Table table = xc.getTable();
 
         int id = 0;
-        for (Row row: table.getRows()){
+        for (Row row : table.getRows()) {
             idList.add(id);
             id++;
-            nameList.add(row.getA());
-            isinList.add(row.getB());
+
+            String name = row.getA();
+            String isin = row.getB();
+            Date redemptionDate = new Date();
+            Date closeOfBusinessDate = new Date();
             try {
-                redemptionDateList.add(dateFormat.parse(row.getC()));
-                closeOfBusinessDateList.add(dateFormat.parse(row.getD()));
+                redemptionDate = dateFormat.parse(row.getC());
+                closeOfBusinessDate = dateFormat.parse(row.getD());
+            } catch (ParseException e) {
+                System.out.println("unable to parse date when creating data store");
             }
-            catch (java.text.ParseException e){
-                redemptionDateList.add(new Date());
-                closeOfBusinessDateList.add(new Date());
-            }
-            cleanPriceList.add(row.getE());
-            dirtyPriceList.add(row.getF());
-            accruedInterestList.add(row.getG());
-            yieldList.add(row.getH());
-            modifiedDurationList.add(row.getI());
+
+            String cleanPrice = row.getE();
+            String dirtyPrice = row.getF();
+            String accruedInterest = row.getG();
+            String yield = row.getH();
+            String modifiedDuration = row.getI();
+            boolean isIndexLinked;
+            Double coupon;
+
+            nameList.add(name);
+            isinList.add(isin);
+            redemptionDateList.add(redemptionDate);
+            closeOfBusinessDateList.add(closeOfBusinessDate);
+            cleanPriceList.add(cleanPrice);
+            dirtyPriceList.add(dirtyPrice);
+            accruedInterestList.add(accruedInterest);
+            yieldList.add(yield);
+            modifiedDurationList.add(modifiedDuration);
 
             String couponS = row.getA().split(" ")[0];
             try {
-                Double couponD = Double.valueOf(couponS.replace("%", ""));
-                couponList.add(couponD);
+                coupon = Double.valueOf(couponS.replace("%", ""));
+            } catch (NumberFormatException e) {
+                coupon = 0.0;
             }
-            catch (NumberFormatException e){
-                couponList.add(0.0);
-            }
-            String indexLinkedString = row.getA().split(" ")[1];
-            if (indexLinkedString.contains("Index")){
-                isIndexLinked.add(true);
-            }
-            else {
-                isIndexLinked.add(false);
-            }
+            couponList.add(coupon);
 
-            valueList .add("0");//todo: needs to be added
+            String indexLinkedString = row.getA().split(" ")[1];
+            if (indexLinkedString.contains("Index")) {
+                isIndexLinked = true;
+            } else {
+                isIndexLinked = false;
+            }
+            isIndexLinkedList.add(isIndexLinked);
+
+            //todo: Create Bond here
+
+            valueList.add("0");//todo: needs to be added
             irrList.add("0");
             durationList.add("0");
             resaleList.add("0");
@@ -85,11 +102,15 @@ public class DataStore {
     }
 
 
-    public ArrayList<DisplayBond> getDisplayBonds(){
+    public ArrayList<DisplayBond> getDisplayBonds() {
 
         ArrayList<DisplayBond> bondList = new ArrayList<>();
 
-        for (int i = 0; i < nameList.size(); i++){
+        for (int i = 0; i < nameList.size(); i++) {
+//            Bond bond = new Bond(redemptionDateList.get(i), closeOfBusinessDateList.get(i), couponList.get(i));
+//
+//            bondList.add(new DisplayBond(nameList.get(i), dateFormat.format(closeOfBusinessDateList.get(i)), dateFormat.format(redemptionDateList.get(i)), Integer.toString(bond.calculateTermsRemainingToday()), Integer.toString(bond.calculateTermsPassedToday()), idList.get(i).toString() , Double.toString(bond.calculateDiscreteValue(closeOfBusinessDateList.get(i)))));
+
             bondList.add(new DisplayBond(nameList.get(i), valueList.get(i), irrList.get(i), durationList.get(i), resaleList.get(i), projection1List.get(i), projection2List.get(i)));
         }
 
