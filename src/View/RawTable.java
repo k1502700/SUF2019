@@ -10,14 +10,14 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class DetailsTable extends VBox {
+public class RawTable extends VBox {
 
     private TableView<DisplayBond> bondtable = new TableView<DisplayBond>();
     private final ObservableList<DisplayBond> data =
             FXCollections.observableArrayList(
-                    new DisplayBond("0","bond1", "value1", "value2","IRR1", "10years", "$11", "0.1", "0.11" ));
+                    new DisplayBond("0","bond1", "value1", "value2", "IRR1", "10years", "$11", "0.1", "0.11" ));
 
-    public DetailsTable(){
+    public RawTable(){
 
         TableColumn idname = new TableColumn("Id");
         idname.setCellValueFactory(
@@ -28,24 +28,19 @@ public class DetailsTable extends VBox {
         bondName.setCellValueFactory(
                 new PropertyValueFactory<DisplayBond, String>("name"));
 
-        TableColumn disValue = new TableColumn("Dis. Value");
-        disValue.setCellValueFactory(
-                new PropertyValueFactory<DisplayBond, String>("disvalue"));
+        TableColumn bondValue = new TableColumn("Redemption Date");
+        bondValue.setCellValueFactory(
+                new PropertyValueFactory<DisplayBond, String>("value"));
 
-        TableColumn contValue = new TableColumn("Cont. Value");
-        contValue.setCellValueFactory(
-                new PropertyValueFactory<DisplayBond, String>("contvalue"));
-
-
-        TableColumn bondIRR = new TableColumn("IRR");
+        TableColumn bondIRR = new TableColumn("End Date");
         bondIRR.setCellValueFactory(
                 new PropertyValueFactory<DisplayBond, String>("irr"));
 
-        TableColumn bondDuration = new TableColumn("Duration");
+        TableColumn bondDuration = new TableColumn("Clean Price");
         bondDuration.setCellValueFactory(
                 new PropertyValueFactory<DisplayBond, String>("duration"));
 
-        TableColumn bondResale = new TableColumn("Resale Value");
+        TableColumn bondResale = new TableColumn("Interest");
         bondResale.setCellValueFactory(
                 new PropertyValueFactory<DisplayBond, String>("resale"));
 
@@ -68,7 +63,7 @@ public class DetailsTable extends VBox {
 
 
         bondtable.setItems(data);
-        bondtable.getColumns().addAll(idname,bondName, disValue, contValue, bondIRR, bondDuration, bondResale, bondProjection);
+        bondtable.getColumns().addAll(idname,bondName, bondValue, bondIRR, bondDuration, bondResale, bondProjection);
 
         this.getChildren().add(bondtable);
 

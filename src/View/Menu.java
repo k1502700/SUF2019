@@ -1,6 +1,7 @@
 package View;
 
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -23,7 +24,11 @@ public class Menu extends VBox {
 
     DatePicker datePicker;
 
-    public Menu() {
+    Scene scene;
+
+    public Menu(Scene scene) {
+
+        this.scene = scene;
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10));

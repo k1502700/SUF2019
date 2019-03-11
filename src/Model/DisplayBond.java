@@ -5,23 +5,30 @@ package Model;
  */
 public class DisplayBond {
 
+
+    private String id;
     private String name;
-    private String value;
+    private String disvalue;
+    private String contvalue;
     private String irr;
     private String duration;
     private String resale;
     private String projection1;
     private String projection2;
 
-    public DisplayBond(String name, String value, String irr, String duration, String resale, String projection1, String projection2) {
+    public DisplayBond(String id,String name, String disvalue, String contvalue, String irr, String duration, String resale, String projection1, String projection2) {
+        this.id = id;
         this.name = name;
-        this.value = value;
+        this.disvalue = disvalue;
+        this.contvalue = contvalue;
         this.irr = irr;
         this.duration = duration;
         this.resale = resale;
         this.projection1 = projection1;
         this.projection2 = projection2;
     }
+
+    public String getId(){ return id;}
 
     public String getName() {
         return name;
@@ -31,13 +38,7 @@ public class DisplayBond {
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
-    }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
 
     public String getIrr() {
         return irr;
@@ -83,12 +84,19 @@ public class DisplayBond {
     public String toString() {
         return "DisplayBond{" +
                 "name='" + name + '\'' +
-                ", value='" + value + '\'' +
                 ", irr='" + irr + '\'' +
                 ", duration='" + duration + '\'' +
                 ", resale='" + resale + '\'' +
                 ", projection1='" + projection1 + '\'' +
                 ", projection2='" + projection2 + '\'' +
                 '}';
+    }
+
+    public String getDisvalue() {
+        return disvalue;
+    }
+
+    public String getContvalue() {
+        return contvalue;
     }
 }

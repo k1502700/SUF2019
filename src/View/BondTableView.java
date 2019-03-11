@@ -29,13 +29,9 @@ public class BondTableView extends Scene {
 
     private DetailsTable detailsTable = new DetailsTable();
 
-    Scene sc;
-
 
     public BondTableView(@NamedArg("root") Parent root, DataStore dataStore) {
         super(root);
-
-        sc = this;
 
         detailsTable.setContent(dataStore.getDisplayBonds());
 
@@ -49,7 +45,7 @@ public class BondTableView extends Scene {
         Sidebar sd = new Sidebar();
         bp.setRight(sd);
 
-        Menu menu = new Menu();
+        Menu menu = new Menu(this);
         bp.setLeft(menu);
 
         detailsTable.getTable().getSelectionModel().setSelectionMode(

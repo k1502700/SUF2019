@@ -25,7 +25,8 @@ public class DataStore {
 
     private ArrayList<Double> couponList = new ArrayList<>();
 
-    private ArrayList<String> valueList = new ArrayList<>();//todo: needs to be calculated
+    private ArrayList<String> disvalueList = new ArrayList<>();//todo: needs to be calculated
+    private ArrayList<String> contvalueList = new ArrayList<>();//todo: needs to be calculated
     private ArrayList<String> irrList = new ArrayList<>();//todo: needs to be calculated
     private ArrayList<String> durationList = new ArrayList<>();//todo: needs to be calculated
     private ArrayList<String> resaleList = new ArrayList<>();//todo: needs to be calculated
@@ -93,7 +94,8 @@ public class DataStore {
             //todo: Create Bond here
             Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon);
 
-            valueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
+            disvalueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
+            contvalueList.add("0");
             irrList.add("0");//todo: needs to be added
             durationList.add("0");
             resaleList.add("0");
@@ -112,14 +114,14 @@ public class DataStore {
 //
 //            bondList.add(new DisplayBond(nameList.get(i), dateFormat.format(closeOfBusinessDateList.get(i)), dateFormat.format(redemptionDateList.get(i)), Integer.toString(bond.calculateTermsRemainingToday()), Integer.toString(bond.calculateTermsPassedToday()), idList.get(i).toString() , Double.toString(bond.calculateDiscreteValue(closeOfBusinessDateList.get(i)))));
 
-            bondList.add(new DisplayBond(nameList.get(i), valueList.get(i), irrList.get(i), durationList.get(i), resaleList.get(i), projection1List.get(i), projection2List.get(i)));
+            bondList.add(new DisplayBond(idList.get(i).toString(), nameList.get(i), disvalueList.get(i), contvalueList.get(i), irrList.get(i), durationList.get(i), resaleList.get(i), projection1List.get(i), projection2List.get(i)));
         }
 
         return bondList;
     }
     
     public DisplayBond getSpecificDisplayBond(int id){
-        return new DisplayBond(nameList.get(id), valueList.get(id), irrList.get(id), durationList.get(id), resaleList.get(id), projection1List.get(id), projection2List.get(id));
+        return new DisplayBond(idList.get(id).toString() , nameList.get(id), disvalueList.get(id), contvalueList.get(id), irrList.get(id), durationList.get(id), resaleList.get(id), projection1List.get(id), projection2List.get(id));
     }
 
 
