@@ -95,7 +95,7 @@ public class DataStore {
             Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon);
 
             disvalueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
-            contvalueList.add("0");
+            contvalueList.add(Double.toString(bond.calculateContinousValue(new Date())));
             irrList.add("0");//todo: needs to be added
             durationList.add("0");
             resaleList.add("0");

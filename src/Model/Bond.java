@@ -46,10 +46,10 @@ public class Bond {
         double initialValue = 100;
 
         for (int i = 0; i < termsRemaining; i++){
-
+            value += coupon/2 / Math.pow(Math.E, (interestRate/2 * termsRemaining));
         }
-
-        return 0.0;
+        value += initialValue / Math.pow(Math.E, (interestRate/2 * termsRemaining));
+        return value;
     }
 
 
