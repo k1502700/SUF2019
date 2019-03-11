@@ -10,6 +10,7 @@ import java.util.Date;
 
 public class DataStore {
 
+    private ArrayList<Integer> idList = new ArrayList<>();
     private ArrayList<String> nameList = new ArrayList<>();
     private ArrayList<String> isinList = new ArrayList<>();
     private ArrayList<Date> redemptionDateList = new ArrayList<>();
@@ -38,7 +39,10 @@ public class DataStore {
         XMLConverter xc = new XMLConverter();
         Table table = xc.getTable();
 
+        int id = 0;
         for (Row row: table.getRows()){
+            idList.add(id);
+            id++;
             nameList.add(row.getA());
             isinList.add(row.getB());
             try {
