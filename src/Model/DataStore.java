@@ -117,6 +117,10 @@ public class DataStore {
 
         return bondList;
     }
+    
+    public DisplayBond getSpecificDisplayBond(int id){
+        return new DisplayBond(nameList.get(id), valueList.get(id), irrList.get(id), durationList.get(id), resaleList.get(id), projection1List.get(id), projection2List.get(id));
+    }
 
 
 }
