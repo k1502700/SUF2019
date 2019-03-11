@@ -91,9 +91,10 @@ public class DataStore {
             isIndexLinkedList.add(isIndexLinked);
 
             //todo: Create Bond here
+            Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon);
 
-            valueList.add("0");//todo: needs to be added
-            irrList.add("0");
+            valueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
+            irrList.add("0");//todo: needs to be added
             durationList.add("0");
             resaleList.add("0");
             projection1List.add("0");
