@@ -10,6 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -43,7 +44,6 @@ public class Sidebar extends VBox {
          datePicker = new DatePicker();
 
 
-
         vbox.getChildren().addAll(interestRate, interestbox, indexvalue, indexbox, date, datePicker);
 
 
@@ -52,12 +52,23 @@ public class Sidebar extends VBox {
     }
 
     public String getInterest(){
-        return interestbox.getText().toString();
+        try{
+            double num = Integer.parseInt(interestbox.getText().toString());
+            return String.valueOf(num);
+        } catch (NumberFormatException e) {
+            return "currentinterestrate";
+        }
     }
 
 
     public String getIndex(){
-        return indexbox.getText().toString();
+        try{
+            double num = Integer.parseInt(indexbox.getText().toString());
+            return String.valueOf(num);
+        } catch (NumberFormatException e) {
+            return "currentindexrate";
+        }
+
     }
 
     public String getDate(){

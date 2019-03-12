@@ -15,14 +15,13 @@ public class RawTable extends VBox {
     private TableView<DisplayBond> bondtable = new TableView<DisplayBond>();
     private final ObservableList<DisplayBond> data =
             FXCollections.observableArrayList(
-                    new DisplayBond("0","bond1", "value1", "value2", "IRR1", "10years", "$11", "0.1", "0.11" ));
+                    new DisplayBond("0", "name" ,"date1", "date1", "price", "interest", "coupon" ));
 
     public RawTable(){
 
         TableColumn idname = new TableColumn("Id");
         idname.setCellValueFactory(
                 new PropertyValueFactory<DisplayBond, String>("id"));
-
 
         TableColumn bondName = new TableColumn("Bond Name");
         bondName.setCellValueFactory(
@@ -45,7 +44,7 @@ public class RawTable extends VBox {
                 new PropertyValueFactory<DisplayBond, String>("interest"));
 
         TableColumn coupon = new TableColumn("Coupon");
-        bondResale.setCellValueFactory(
+        coupon.setCellValueFactory(
                 new PropertyValueFactory<DisplayBond, String>("coupon"));
 
 

@@ -31,7 +31,7 @@ public class BondTableView extends Scene {
     private RawTable rawTable = new RawTable();
     private BorderPane bp;
     DataStore dataStore;
-
+    Sidebar sd;
 
     public BondTableView(@NamedArg("root") Parent root, DataStore dataStore) {
         super(root);
@@ -49,7 +49,7 @@ public class BondTableView extends Scene {
         bp.setCenter(detailsTable);
         bp.setTop(title);
 
-        Sidebar sd = new Sidebar();
+        sd = new Sidebar();
         bp.setRight(sd);
 
         Menu menu = new Menu(this);
@@ -107,6 +107,18 @@ public class BondTableView extends Scene {
     public void setRaw(){
         bp.setCenter(rawTable);
         rawTable.setContent(dataStore.getRawBonds());
+    }
+
+    public String getDate(){
+        return sd.getDate();
+    }
+
+    public String getIndex(){
+       return sd.getIndex();
+    }
+
+    public String getInterest(){
+        return sd.getInterest();
     }
 
 
