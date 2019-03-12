@@ -5,6 +5,7 @@ import Model.XMLConverter.DataRoot;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Bond {
 
@@ -33,25 +34,23 @@ public class Bond {
         this.dataRoot = dataRoot;
     }
 
-    public double calculateDiscreteValue(Date fromDate){
-        if (isIndexLinked){
+    public double calculateDiscreteValue(Date fromDate) {
+        if (isIndexLinked) {
             return calculateDiscreteValueIL(fromDate);
-        }
-        else {
+        } else {
             return calculateDiscreteValueNL(fromDate);
         }
     }
 
-    public double calculateContinuousValue(Date fromDate){
-        if (isIndexLinked){
+    public double calculateContinuousValue(Date fromDate) {
+        if (isIndexLinked) {
             return calculateContinuousValueIL(fromDate);
-        }
-        else {
+        } else {
             return calculateContinuousValueNL(fromDate);
         }
     }
 
-    public double calculateIRRinterestRate(){
+    public double calculateIRRinterestRate() {
         double value = 0.0;
         int termsRemaining = calculateTermsRemaining(closeOfBusinessDate);
 
@@ -67,9 +66,9 @@ public class Bond {
         double initialValue = 100;
 
         for (int i = 0; i < termsRemaining; i++) {
-            value += coupon/2 / Math.pow((1 + interestRate/2), termsRemaining);
+            value += coupon / 2 / Math.pow((1 + interestRate / 2), termsRemaining);
         }
-        value += initialValue / Math.pow((1 + interestRate/2), termsRemaining);
+        value += initialValue / Math.pow((1 + interestRate / 2), termsRemaining);
         return value;
     }
 
@@ -78,14 +77,14 @@ public class Bond {
         int termsRemaining = calculateTermsRemaining(fromDate);
         double initialValue = 100;
 
-        for (int i = 0; i < termsRemaining; i++){
-            value += coupon/2 / Math.pow(Math.E, (interestRate/2 * termsRemaining));
+        for (int i = 0; i < termsRemaining; i++) {
+            value += coupon / 2 / Math.pow(Math.E, (interestRate / 2 * termsRemaining));
         }
-        value += initialValue / Math.pow(Math.E, (interestRate/2 * termsRemaining));
+        value += initialValue / Math.pow(Math.E, (interestRate / 2 * termsRemaining));
         return value;
     }
 
-    private double calculateiFact(Date date){
+    private double calculateiFact(Date date) {
         return dataRoot.getInterestRate(date, this.isin) / dataRoot.getInterestRate(closeOfBusinessDate, isin);
     }
 
@@ -96,25 +95,25 @@ public class Bond {
         double couponIL = interestRate * 100 * iFact;
         double value = 0.0;
 
-        for (int i = 0; i < termsRemaining; i++){
-            value += couponIL/2 / Math.pow(1 + (interestRate/2), termsRemaining);
+        for (int i = 0; i < termsRemaining; i++) {
+            value += couponIL / 2 / Math.pow(1 + (interestRate / 2), termsRemaining);
         }
-        value += initialValue / Math.pow(1 + (interestRate/2), termsRemaining);
+        value += initialValue / Math.pow(1 + (interestRate / 2), termsRemaining);
 
         return value;
     }
 
     private double calculateContinuousValueIL(Date fromDate) {
         double iFact = calculateiFact(fromDate);
-        int termsRemaining = calculateTermsRemaining(fromDate)/2;
+        int termsRemaining = calculateTermsRemaining(fromDate) / 2;
         double initialValue = 100;
         double couponIL = interestRate * 100 * iFact;
         double value = 0.0;
 
-        for (int i = 0; i < termsRemaining; i++){
-            value += couponIL/2 / Math.pow(Math.E, (interestRate/2) * termsRemaining);
+        for (int i = 0; i < termsRemaining; i++) {
+            value += couponIL / 2 / Math.pow(Math.E, (interestRate / 2) * termsRemaining);
         }
-        value += initialValue / Math.pow(Math.E, (interestRate/2) * termsRemaining);
+        value += initialValue / Math.pow(Math.E, (interestRate / 2) * termsRemaining);
 
         return value;
     }
@@ -189,7 +188,7 @@ public class Bond {
         return calculateTermDifference(date, redemptionDate);
     }
 
-    public double calculateResaleValue(Date date){
+    public double calculateResaleValue(Date date) {
 
         double value = calculateContinuousValue(date);
 
@@ -198,6 +197,36 @@ public class Bond {
         double resalevalue = 1.1;
 
         return resalevalue;
+    }
+
+    public int calculateDaysToNextPayment(Date currentDate) {
+        Date nextPaymentDate = calculateNextPayment(currentDate);
+        long difference = nextPaymentDate.getTime() - currentDate.getTime();
+        return (int) TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
+    }
+
+
+    public Date calculateNextPayment(Date currentDate) {
+        String year = yearFormat.format(currentDate);
+        Date jan = new Date();
+        Date july = new Date();
+        Date nextJan = new Date();
+        try {
+            jan = dateFormat.parse("01/22/" + year);
+            nextJan = dateFormat.parse("01/22/" + Integer.toString(Integer.parseInt(year) + 1));
+            july = dateFormat.parse("07/22/" + year);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (currentDate.after(july)) {
+            return nextJan;
+        }
+        else if (currentDate.after(jan)) {
+            return july;
+        }
+        else return jan;
+
     }
 
     public int calculateTermsPassed(Date date) {

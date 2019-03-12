@@ -1,9 +1,6 @@
 package Model;
 
-import Model.XMLConverter.DataRoot;
-import Model.XMLConverter.Row;
-import Model.XMLConverter.Table;
-import Model.XMLConverter.XMLConverter;
+import Model.XMLConverter.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +9,7 @@ import java.util.Date;
 
 public class DataStore {
     DataRoot dataRoot;
+    IssueTable issueTable;
 
     private ArrayList<Integer> idList = new ArrayList<>();
     private ArrayList<String> nameList = new ArrayList<>();
@@ -36,6 +34,7 @@ public class DataStore {
     private ArrayList<String> projection2List = new ArrayList<>();//todo: needs to be calculated
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 
 
     public DataStore() {
@@ -43,6 +42,7 @@ public class DataStore {
         XMLConverter xc = new XMLConverter();
         Table table = xc.getTable();
         dataRoot = xc.getDataRoot();
+        issueTable = xc.getIssueTable();
 
         int id = 0;
         for (Row row : table.getRows()) {
@@ -103,7 +103,7 @@ public class DataStore {
             contvalueList.add(Double.toString(bond.calculateContinuousValue(new Date())));
             irrList.add("0");//todo: needs to be added
             durationList.add("0");
-            resaleList.add(Double.toString(bond.calculateResaleValue()));
+            resaleList.add(Double.toString(bond.calculateResaleValue(new Date())));
             projection1List.add("0");
             projection2List.add("0");
         }
@@ -150,6 +150,89 @@ public class DataStore {
         }
 
         return bondList;
+    }
+
+    public double getInterestRateByYear(Date date){
+        SimpleDateFormat interestRateFormat = new SimpleDateFormat("yyyy-dd-MMM");
+        try {
+            Date a = interestRateFormat.parse("2006-3-Aug");
+            Date b = interestRateFormat.parse("2006-9-Nov");
+            Date c = interestRateFormat.parse("2007-11-Jan");
+            Date d = interestRateFormat.parse("2007-10-May");
+            Date e = interestRateFormat.parse("2007-5-Jul");
+            Date f = interestRateFormat.parse("2007-6-Dec");
+            Date g = interestRateFormat.parse("2008-7-Feb");
+            Date h = interestRateFormat.parse("2008-10-Apr");
+            Date i = interestRateFormat.parse("2008-8-Oct");
+            Date j = interestRateFormat.parse("2008-6-Nov");
+            Date k = interestRateFormat.parse("2008-4-Dec");
+            Date l = interestRateFormat.parse("2009-8-Jan");
+            Date m = interestRateFormat.parse("2009-5-Feb");
+            Date n = interestRateFormat.parse("2009-5-Mar");
+            Date o = interestRateFormat.parse("2016-4-Aug");
+            Date p = interestRateFormat.parse("2017-2-Nov");
+            Date q = interestRateFormat.parse("2018-2-Aug");
+            Date r = interestRateFormat.parse("2019-7-Feb");
+
+            if (date.after(r)){
+                return 0.75;
+            }
+            if (date.after(q)){
+                return 0.75;
+            }
+            if (date.after(p)){
+                return 0.5;
+            }
+            if (date.after(o)){
+                return 0.25;
+            }
+            if (date.after(n)){
+                return 0.5;
+            }
+            if (date.after(m)){
+                return 1;
+            }
+            if (date.after(l)){
+                return 1.5;
+            }
+            if (date.after(k)){
+                return 2;
+            }
+            if (date.after(j)){
+                return 3;
+            }
+            if (date.after(i)){
+                return 4.5;
+            }
+            if (date.after(h)){
+                return 5;
+            }
+            if (date.after(g)){
+                return 5.25;
+            }
+            if (date.after(f)){
+                return 5.5;
+            }
+            if (date.after(e)){
+                return 5.75;
+            }
+            if (date.after(d)){
+                return 5.5;
+            }
+            if (date.after(c)){
+                return 5.25;
+            }
+            if (date.after(b)){
+                return 5;
+            }
+            if (date.after(a)){
+                return 4.75;
+            }
+            return 5;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 5;
     }
 
 

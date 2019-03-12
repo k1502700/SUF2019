@@ -11,10 +11,12 @@ import java.nio.file.Paths;
 public class XMLConverter {
     Table table;
     DataRoot dataRoot;
+    IssueTable issueTable;
 
     public XMLConverter(){
         convertInterestRates();
         convertBonds();
+        convertIssueDates();
     }
 
     public void convertInterestRates(){
@@ -34,11 +36,29 @@ public class XMLConverter {
         }
 
         dataRoot = (DataRoot) xStream.fromXML(input);
-        System.out.println();
 
     }
 
+    public void convertIssueDates(){
 
+        Class<?>[] classes = new Class[] { IssueTable.class, Issue.class};
+        XStream xStream = new XStream();
+        XStream.setupDefaultSecurity(xStream);
+        xStream.allowTypes(classes);
+
+        xStream.processAnnotations(IssueTable.class);
+        xStream.processAnnotations(Issue.class);
+
+        String input = "";
+        try {
+            input = readFile("C:\\Users\\Robert\\IdeaProjects\\SUF2019\\src\\Model\\XMLConverter\\GiltsInIssueTruncated.xml", StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        issueTable = (IssueTable) xStream.fromXML(input);
+
+    }
 
 
     public void convertBonds(){
@@ -104,5 +124,9 @@ public class XMLConverter {
 
     public DataRoot getDataRoot() {
         return dataRoot;
+    }
+
+    public IssueTable getIssueTable() {
+        return issueTable;
     }
 }

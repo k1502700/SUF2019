@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="windows-1252" standalone="yes"?>
+<IssueTable>
+    <Issue name="4.5% Treasury Gilt 2019" isin="GB00B39R3F84" issueDate="26-Sep-2008"/>
+    <Issue name="1.75% Treasury Gilt 2019" isin="GB00BDV0F150" issueDate="22-Nov-2013"/>
+    <Issue name="3.75% Treasury Gilt 2019" isin="GB00B4YRFP41" issueDate="08-Jul-2009"/>
+    <Issue name="4.75% Treasury Stock 2020" isin="GB00B058DQ55" issueDate="29-Mar-2005"/>
+    <Issue name="2% Treasury Gilt 2020" isin="GB00BN65R198" issueDate="03-Sep-2014"/>
+    <Issue name="3.75% Treasury Gilt 2020" isin="GB00B582JV65" issueDate="10-Jun-2010"/>
+    <Issue name="1.5% Treasury Gilt 2021" isin="GB00BYY5F581" issueDate="03-Sep-2015"/>
+    <Issue name="8% Treasury Stock 2021" isin="GB0009997999" issueDate="29-Feb-1996"/>
+    <Issue name="3.75% Treasury Gilt 2021" isin="GB00B4RMG977" issueDate="18-Mar-2011"/>
+    <Issue name="4% Treasury Gilt 2022" isin="GB00B3KJDQ49" issueDate="27-Feb-2009"/>
+    <Issue name="0.5% Treasury Gilt 2022" isin="GB00BD0PCK97" issueDate="03-Aug-2016"/>
+    <Issue name="1.75% Treasury Gilt 2022" isin="GB00B7L9SL19" issueDate="22-Jun-2012"/>
+    <Issue name="0.75% Treasury Gilt 2023" isin="GB00BF0HZ991" issueDate="20-Jul-2017"/>
+    <Issue name="2.25% Treasury Gilt 2023" isin="GB00B7Z53659" issueDate="12-Jun-2013"/>
+    <Issue name="1% Treasury Gilt 2024" isin="GB00BFWFPL34" issueDate="25-Jul-2018"/>
+    <Issue name="2.75% Treasury Gilt 2024" isin="GB00BHBFH458" issueDate="12-Mar-2014"/>
+    <Issue name="5% Treasury Stock 2025" isin="GB0030880693" issueDate="27-Sep-2001"/>
+    <Issue name="2% Treasury Gilt 2025" isin="GB00BTHH2R79" issueDate="20-Mar-2015"/>
+    <Issue name="1.5% Treasury Gilt 2026" isin="GB00BYZW3G56" issueDate="18-Feb-2016"/>
+    <Issue name="1.25% Treasury Gilt 2027" isin="GB00BDRHNP05" issueDate="15-Mar-2017"/>
+    <Issue name="4.25% Treasury Gilt 2027" isin="GB00B16NNR78" issueDate="06-Sep-2006"/>
+    <Issue name="1.625% Treasury Gilt 2028" isin="GB00BFX0ZL78" issueDate="16-Mar-2018"/>
+    <Issue name="6% Treasury Stock 2028" isin="GB0002404191" issueDate="29-Jan-1998"/>
+    <Issue name="4.75% Treasury Gilt 2030" isin="GB00B24FF097" issueDate="03-Oct-2007"/>
+    <Issue name="4.25% Treasury Stock 2032" isin="GB0004893086" issueDate="25-May-2000"/>
+    <Issue name="4.5% Treasury Gilt 2034" isin="GB00B52WS153" issueDate="17-Jun-2009"/>
+    <Issue name="4.25% Treasury Stock 2036" isin="GB0032452392" issueDate="27-Feb-2003"/>
+    <Issue name="1.75% Treasury Gilt 2037" isin="GB00BZB26Y51" issueDate="09-Nov-2016"/>
+    <Issue name="4.75% Treasury Stock 2038" isin="GB00B00NY175" issueDate="23-Apr-2004"/>
+    <Issue name="4.25% Treasury Gilt 2039" isin="GB00B3KJDS62" issueDate="05-Mar-2009"/>
+    <Issue name="4.25% Treasury Gilt 2040" isin="GB00B6460505" issueDate="30-Jun-2010"/>
+    <Issue name="4.5% Treasury Gilt 2042" isin="GB00B1VWPJ53" issueDate="06-Jun-2007"/>
+    <Issue name="3.25% Treasury Gilt 2044" isin="GB00B84Z9V04" issueDate="24-Oct-2012"/>
+    <Issue name="3.5% Treasury Gilt 2045" isin="GB00BN65R313" issueDate="25-Jun-2014"/>
+    <Issue name="4.25% Treasury Gilt 2046" isin="GB00B128DP45" issueDate="12-May-2006"/>
+    <Issue name="1.5% Treasury Gilt 2047" isin="GB00BDCHBW80" issueDate="21-Sep-2016"/>
+    <Issue name="1.75% Treasury Gilt 2049" isin="GB00BFWFPP71" issueDate="12-Sep-2018"/>
+    <Issue name="4.25% Treasury Gilt 2049" isin="GB00B39R3707" issueDate="03-Sep-2008"/>
+    <Issue name="3.75% Treasury Gilt 2052" isin="GB00B6RNH572" issueDate="28-Sep-2011"/>
+    <Issue name="4.25% Treasury Gilt 2055" isin="GB00B06YGN05" issueDate="27-May-2005"/>
+    <Issue name="1.75% Treasury Gilt 2057" isin="GB00BD0XH204" issueDate="25-Jan-2017"/>
+    <Issue name="4% Treasury Gilt 2060" isin="GB00B54QLM75" issueDate="22-Oct-2009"/>
+    <Issue name="2.5% Treasury Gilt 2065" isin="GB00BYYMZX75" issueDate="21-Oct-2015"/>
+    <Issue name="3.5% Treasury Gilt 2068" isin="GB00BBJNQY21" issueDate="26-Jun-2013"/>
+    <Issue name="1.625% Treasury Gilt 2071" isin="GB00BFMCN652" issueDate="16-May-2018"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2019" isin="GB00BBDR7T29" issueDate="21-Aug-2013"/>
+    <Issue name="1.875% Index-linked Treasury Gilt 2022" isin="GB00B1Z5HQ14" issueDate="11-Jul-2007"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2024" isin="GB00B85SFQ54" issueDate="12-Oct-2012"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2026" isin="GB00BYY5F144" issueDate="16-Jul-2015"/>
+    <Issue name="1.25% Index-linked Treasury Gilt 2027" isin="GB00B128DH60" issueDate="26-Apr-2006"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2028" isin="GB00BZ1NTB69" issueDate="21-Jun-2018"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2029" isin="GB00B3Y1JG82" issueDate="23-Nov-2011"/>
+    <Issue name="1.25% Index-linked Treasury Gilt 2032" isin="GB00B3D4VD98" issueDate="29-Oct-2008"/>
+    <Issue name="0.75% Index-linked Treasury Gilt 2034" isin="GB00B46CGH68" issueDate="25-May-2011"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2036" isin="GB00BYZW3J87" issueDate="11-Mar-2016"/>
+    <Issue name="1.125% Index-linked Treasury Gilt 2037" isin="GB00B1L6W962" issueDate="21-Feb-2007"/>
+    <Issue name="0.625% Index-linked Treasury Gilt 2040" isin="GB00B3LZBF68" issueDate="28-Jan-2010"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2041" isin="GB00BGDYHF49" issueDate="12-Jul-2018"/>
+    <Issue name="0.625% Index-linked Treasury Gilt 2042" isin="GB00B3MYD345" issueDate="24-Jul-2009"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2044" isin="GB00B7RN0G65" issueDate="25-Jul-2012"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2046" isin="GB00BYMWG366" issueDate="24-Jun-2015"/>
+    <Issue name="0.75% Index-linked Treasury Gilt 2047" isin="GB00B24FFM16" issueDate="21-Nov-2007"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2048" isin="GB00BZ13DV40" issueDate="08-Nov-2017"/>
+    <Issue name="0.5% Index-linked Treasury Gilt 2050" isin="GB00B421JZ66" issueDate="25-Sep-2009"/>
+    <Issue name="0.25% Index-linked Treasury Gilt 2052" isin="GB00B73ZYW09" issueDate="26-Sep-2012"/>
+    <Issue name="1.25% Index-linked Treasury Gilt 2055" isin="GB00B0CNHZ09" issueDate="23-Sep-2005"/>
+    <Issue name="0.125% Index-Linked Treasury Gilt 2056" isin="GB00BYVP4K94" issueDate="30-Nov-2016"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2058" isin="GB00BP9DLZ64" issueDate="30-Jul-2014"/>
+    <Issue name="0.375% Index-linked Treasury Gilt 2062" isin="GB00B4PTCY75" issueDate="26-Oct-2011"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2065" isin="GB00BD9MZZ71" issueDate="24-Feb-2016"/>
+    <Issue name="0.125% Index-linked Treasury Gilt 2068" isin="GB00BDX8CX86" issueDate="25-Sep-2013"/>
+    <Issue name="2.5% Index-linked Treasury Stock 2020" isin="GB0009081828" issueDate="12-Oct-1983"/>
+    <Issue name="2.5% Index-linked Treasury Stock 2024" isin="GB0008983024" issueDate="30-Dec-1986"/>
+    <Issue name="4.125% Index-linked Treasury Stock 2030" isin="GB0008932666" issueDate="12-Jun-1992"/>
+    <Issue name="2% Index-linked Treasury Stock 2035" isin="GB0031790826" issueDate="11-Jul-2002"/>
+</IssueTable>
