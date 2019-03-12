@@ -103,7 +103,7 @@ public class DataStore {
             contvalueList.add(Double.toString(bond.calculateContinuousValue(new Date())));
             irrList.add("0");//todo: needs to be added
             durationList.add("0");
-            resaleList.add("0");
+            resaleList.add(Double.toString(bond.calculateResaleValue()));
             projection1List.add("0");
             projection2List.add("0");
         }

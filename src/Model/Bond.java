@@ -189,14 +189,13 @@ public class Bond {
         return calculateTermDifference(date, redemptionDate);
     }
 
-    public double calculateResaleValue(){
+    public double calculateResaleValue(Date date){
 
-        double value = calculateContinuousValue(new Date());
+        double value = calculateContinuousValue(date);
 
-        int termsremaining = calculateTermsRemaining(new Date());
+        //TODO: calculate days from date until next coupon payment
 
-        double resalevalue = value + (termsremaining/365)*coupon;
-
+        double resalevalue = 1.1;
 
         return resalevalue;
     }
