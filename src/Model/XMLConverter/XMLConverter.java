@@ -10,8 +10,38 @@ import java.nio.file.Paths;
 
 public class XMLConverter {
     Table table;
+    DataRoot dataRoot;
 
     public XMLConverter(){
+        convertInterestRates();
+        convertBonds();
+    }
+
+    public void convertInterestRates(){
+        Class<?>[] classes = new Class[] { DataRoot.class, Sheet.class};
+        XStream xStream = new XStream();
+        XStream.setupDefaultSecurity(xStream);
+        xStream.allowTypes(classes);
+
+        xStream.processAnnotations(DataRoot.class);
+        xStream.processAnnotations(Sheet.class);
+
+        String input = "";
+        try {
+            input = readFile("C:\\Users\\Robert\\IdeaProjects\\SUF2019\\src\\Model\\XMLConverter\\IndexRatioData.xml", StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        dataRoot = (DataRoot) xStream.fromXML(input);
+        System.out.println();
+
+    }
+
+
+
+
+    public void convertBonds(){
 
         Class<?>[] classes = new Class[] { Table.class, Row.class, Cell.class};
         XStream xStream = new XStream();
@@ -70,5 +100,9 @@ public class XMLConverter {
 
     public Table getTable() {
         return table;
+    }
+
+    public DataRoot getDataRoot() {
+        return dataRoot;
     }
 }

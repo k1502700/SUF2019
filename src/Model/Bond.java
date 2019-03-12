@@ -40,7 +40,7 @@ public class Bond {
         return value;
     }
 
-    public double calculateContinousValue(Date fromDate) {//todo: not finished
+    public double calculateContinuousValue(Date fromDate) {//todo: not finished
         double value = 0.0;
         int termsRemaining = calculateTermsRemaining(fromDate);
         double initialValue = 100;
@@ -51,6 +51,8 @@ public class Bond {
         value += initialValue / Math.pow(Math.E, (interestRate/2 * termsRemaining));
         return value;
     }
+
+//    public double calculate2Macaulay
 
 
     public int calculateTermDifference(Date date1, Date date2) {
