@@ -95,11 +95,11 @@ public class DataStore {
             isIndexLinkedList.add(isIndexLinked);
 
             //todo: Create Bond here
-            Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon);
+            Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon, isIndexLinked, isin, dataRoot);
 
 //            double interestRate = dataRoot.getInterestRate(new Date(), isinList.get(0));
-//            disvalueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
-            disvalueList.add(Double.toString(dataRoot.getInterestRate(closeOfBusinessDate, isin)));
+            disvalueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
+//            disvalueList.add(Double.toString(dataRoot.getInterestRate(closeOfBusinessDate, isin)));
             contvalueList.add(Double.toString(bond.calculateContinuousValue(new Date())));
             irrList.add("0");//todo: needs to be added
             durationList.add("0");
