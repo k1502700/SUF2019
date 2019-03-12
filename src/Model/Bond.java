@@ -189,6 +189,18 @@ public class Bond {
         return calculateTermDifference(date, redemptionDate);
     }
 
+    public double calculateResaleValue(){
+
+        double value = calculateContinuousValue(new Date());
+
+        int termsremaining = calculateTermsRemaining(new Date());
+
+        double resalevalue = value + (termsremaining/365)*coupon;
+
+
+        return resalevalue;
+    }
+
     public int calculateTermsPassed(Date date) {
 
         if (!date.after(closeOfBusinessDate)) {

@@ -10,8 +10,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Created by robert on 2019. 03. 02..
@@ -56,7 +59,7 @@ public class Sidebar extends VBox {
             double num = Integer.parseInt(interestbox.getText().toString());
             return String.valueOf(num);
         } catch (NumberFormatException e) {
-            return "currentinterestrate";
+            return "0.75";
         }
     }
 
@@ -72,7 +75,14 @@ public class Sidebar extends VBox {
     }
 
     public String getDate(){
+        if (datePicker.getValue()== null){
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = new Date();
+            return dateFormat.format(date).toString();
+        }
+
         return datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
     }
 
 }

@@ -115,7 +115,12 @@ public class DataStore {
         ArrayList<DisplayBond> bondList = new ArrayList<>();
 
         for (int i = 0; i < nameList.size(); i++) {
-//            Bond bond = new Bond(redemptionDateList.get(i), closeOfBusinessDateList.get(i), couponList.get(i));
+
+            //get bond constructor
+
+
+
+            //Bond bond = new Bond(redemptionDateList.get(i), closeOfBusinessDateList.get(i), couponList.get(i));
 //            Date date = new Date();
 //            try {
 //                date = dateFormat.parse("03/12/2019");
