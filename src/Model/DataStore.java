@@ -1,5 +1,6 @@
 package Model;
 
+import Model.XMLConverter.DataRoot;
 import Model.XMLConverter.Row;
 import Model.XMLConverter.Table;
 import Model.XMLConverter.XMLConverter;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DataStore {
+    DataRoot dataRoot;
 
     private ArrayList<Integer> idList = new ArrayList<>();
     private ArrayList<String> nameList = new ArrayList<>();
@@ -40,6 +42,7 @@ public class DataStore {
 
         XMLConverter xc = new XMLConverter();
         Table table = xc.getTable();
+        dataRoot = xc.getDataRoot();
 
         int id = 0;
         for (Row row : table.getRows()) {
@@ -92,10 +95,12 @@ public class DataStore {
             isIndexLinkedList.add(isIndexLinked);
 
             //todo: Create Bond here
-            Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon);
+            Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon, isIndexLinked, isin, dataRoot);
 
+//            double interestRate = dataRoot.getInterestRate(new Date(), isinList.get(0));
             disvalueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
-            contvalueList.add(Double.toString(bond.calculateContinousValue(new Date())));
+//            disvalueList.add(Double.toString(dataRoot.getInterestRate(closeOfBusinessDate, isin)));
+            contvalueList.add(Double.toString(bond.calculateContinuousValue(new Date())));
             irrList.add("0");//todo: needs to be added
             durationList.add("0");
             resaleList.add("0");
@@ -111,8 +116,15 @@ public class DataStore {
 
         for (int i = 0; i < nameList.size(); i++) {
 //            Bond bond = new Bond(redemptionDateList.get(i), closeOfBusinessDateList.get(i), couponList.get(i));
-//
-//            bondList.add(new DisplayBond(nameList.get(i), dateFormat.format(closeOfBusinessDateList.get(i)), dateFormat.format(redemptionDateList.get(i)), Integer.toString(bond.calculateTermsRemainingToday()), Integer.toString(bond.calculateTermsPassedToday()), idList.get(i).toString() , Double.toString(bond.calculateDiscreteValue(closeOfBusinessDateList.get(i)))));
+//            Date date = new Date();
+//            try {
+//                date = dateFormat.parse("03/12/2019");
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//            String s = Double.toString(dataRoot.getInterestRate(date, isinList.get(i)));
+//            System.out.print("");
+//            bondList.add(new DisplayBond(nameList.get(i), dateFormat.format(closeOfBusinessDateList.get(i)), dateFormat.format(redemptionDateList.get(i)), "", Integer.toString(bond.calculateTermsPassedToday()), idList.get(i).toString() , Double.toString(bond.calculateDiscreteValue(closeOfBusinessDateList.get(i)))));
 
             bondList.add(new DisplayBond(idList.get(i).toString(), nameList.get(i), disvalueList.get(i), contvalueList.get(i), irrList.get(i), durationList.get(i), resaleList.get(i), projection1List.get(i), projection2List.get(i)));
         }

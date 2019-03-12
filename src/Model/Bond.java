@@ -1,5 +1,7 @@
 package Model;
 
+import Model.XMLConverter.DataRoot;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,22 +14,53 @@ public class Bond {
     private double cleanPrice;
     private double interestRate;
     private double coupon;
+    private String isin;
 
+    private DataRoot dataRoot;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     private SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
     private SimpleDateFormat monthDayFormat = new SimpleDateFormat("MM/dd");
 
 
-    public Bond(Date redemptionDate, Date closeOfBusinessDate, Double coupon) {
+    public Bond(Date redemptionDate, Date closeOfBusinessDate, Double coupon, boolean isIndexLinked, String isin, DataRoot dataRoot) {
         this.redemptionDate = redemptionDate;
         this.closeOfBusinessDate = closeOfBusinessDate;
         this.coupon = coupon;
         interestRate = coupon / 100;
+        this.isIndexLinked = isIndexLinked;
+        this.isin = isin;
+        this.dataRoot = dataRoot;
     }
 
+    public double calculateDiscreteValue(Date fromDate){
+        if (isIndexLinked){
+            return calculateDiscreteValueIL(fromDate);
+        }
+        else {
+            return calculateDiscreteValueNL(fromDate);
+        }
+    }
 
-    public double calculateDiscreteValue(Date fromDate) {
+    public double calculateContinuousValue(Date fromDate){
+        if (isIndexLinked){
+            return calculateContinuousValueIL(fromDate);
+        }
+        else {
+            return calculateContinuousValueNL(fromDate);
+        }
+    }
+
+    public double calculateIRRinterestRate(){
+        double value = 0.0;
+        int termsRemaining = calculateTermsRemaining(closeOfBusinessDate);
+
+
+        return 0.0;
+
+    }
+
+    private double calculateDiscreteValueNL(Date fromDate) {
 
         double value = 0.0;
         int termsRemaining = calculateTermsRemaining(fromDate);
@@ -40,7 +73,7 @@ public class Bond {
         return value;
     }
 
-    public double calculateContinousValue(Date fromDate) {//todo: not finished
+    private double calculateContinuousValueNL(Date fromDate) {//todo: not finished
         double value = 0.0;
         int termsRemaining = calculateTermsRemaining(fromDate);
         double initialValue = 100;
@@ -51,6 +84,41 @@ public class Bond {
         value += initialValue / Math.pow(Math.E, (interestRate/2 * termsRemaining));
         return value;
     }
+
+    private double calculateiFact(Date date){
+        return dataRoot.getInterestRate(date, this.isin) / dataRoot.getInterestRate(closeOfBusinessDate, isin);
+    }
+
+    private double calculateDiscreteValueIL(Date fromDate) {
+        double iFact = calculateiFact(fromDate);
+        int termsRemaining = calculateTermsRemaining(fromDate);
+        double initialValue = 100;
+        double couponIL = interestRate * 100 * iFact;
+        double value = 0.0;
+
+        for (int i = 0; i < termsRemaining; i++){
+            value += couponIL/2 / Math.pow(1 + (interestRate/2), termsRemaining);
+        }
+        value += initialValue / Math.pow(1 + (interestRate/2), termsRemaining);
+
+        return value;
+    }
+
+    private double calculateContinuousValueIL(Date fromDate) {
+        double iFact = calculateiFact(fromDate);
+        int termsRemaining = calculateTermsRemaining(fromDate)/2;
+        double initialValue = 100;
+        double couponIL = interestRate * 100 * iFact;
+        double value = 0.0;
+
+        for (int i = 0; i < termsRemaining; i++){
+            value += couponIL/2 / Math.pow(Math.E, (interestRate/2) * termsRemaining);
+        }
+        value += initialValue / Math.pow(Math.E, (interestRate/2) * termsRemaining);
+
+        return value;
+    }
+//    public double calculate2Macaulay
 
 
     public int calculateTermDifference(Date date1, Date date2) {
