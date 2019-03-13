@@ -252,11 +252,10 @@ public class Bond {
 
     public int calculateTermsPassed(Date date) {
 
-        if (!date.after(closeOfBusinessDate)) {
+        if (!date.after(issueTable.getIssueDate(isin))) {
             return 0;
-//            throw new IllegalArgumentException("Date before close of business date!");
         }
-        return calculateTermDifference(closeOfBusinessDate, date);
+        return calculateTermDifference(issueTable.getIssueDate(isin), date);
     }
 
     public int calculateTermsRemainingToday() {
