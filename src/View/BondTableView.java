@@ -20,23 +20,24 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by robert on 2019. 03. 02..
  */
 public class BondTableView extends Scene {
 
+    DataStore dataStore;
 
     private DetailsTable detailsTable = new DetailsTable();
     private RawTable rawTable = new RawTable();
     private BorderPane bp;
-    DataStore dataStore;
     Sidebar sd;
 
-    public BondTableView(@NamedArg("root") Parent root, DataStore dataStore) {
+    public BondTableView(@NamedArg("root") Parent root) {
         super(root);
 
-        this.dataStore = dataStore;
+        dataStore = new DataStore(new Date(), 0.75);
 
         detailsTable.setContent(dataStore.getDisplayBonds());
 
@@ -49,7 +50,7 @@ public class BondTableView extends Scene {
         bp.setCenter(detailsTable);
         bp.setTop(title);
 
-        sd = new Sidebar();
+        sd = new Sidebar(this);
         bp.setRight(sd);
 
         Menu menu = new Menu(this);
@@ -109,7 +110,12 @@ public class BondTableView extends Scene {
         rawTable.setContent(dataStore.getRawBonds());
     }
 
-    public String getDate(){
+    public void setTableContent(Date date, double interest){
+        dataStore = new DataStore(date, interest);
+        detailsTable.setContent(dataStore.getDisplayBonds());
+    }
+
+    public Date getDate(){
         return sd.getDate();
     }
 

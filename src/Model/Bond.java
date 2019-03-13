@@ -200,9 +200,8 @@ public class Bond {
 
         int daysToNextPayment = calculateDaysToNextPayment(date);
 
-        //todo: write method
 
-        double resalevalue = 1.1;
+        double resalevalue = value + ((double) daysToNextPayment/365.0)*coupon;
 
         return resalevalue;
     }

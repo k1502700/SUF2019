@@ -1,10 +1,9 @@
 package View;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -13,6 +12,7 @@ import javafx.scene.text.Text;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -27,7 +27,11 @@ public class Sidebar extends VBox {
 
     DatePicker datePicker;
 
-    public Sidebar() {
+    BondTableView bondTableView;
+
+    public Sidebar(BondTableView bondTableView) {
+
+        this.bondTableView = bondTableView;
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10));
@@ -46,8 +50,24 @@ public class Sidebar extends VBox {
         Label date = new Label("Date:");
          datePicker = new DatePicker();
 
+        Button recalc = new Button("Apply");
 
-        vbox.getChildren().addAll(interestRate, interestbox, indexvalue, indexbox, date, datePicker);
+        recalc.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+
+                System.out.println(getDate() + " " + getInterest());
+
+                bondTableView.setTableContent( getDate() ,Double.parseDouble(getInterest()));
+
+            }
+        });
+
+
+
+
+        vbox.getChildren().addAll(interestRate, interestbox, indexvalue, indexbox, date, datePicker, recalc);
 
 
         this.getChildren().add(vbox);
@@ -56,7 +76,7 @@ public class Sidebar extends VBox {
 
     public String getInterest(){
         try{
-            double num = Integer.parseInt(interestbox.getText().toString());
+            double num = Double.parseDouble(interestbox.getText().toString());
             return String.valueOf(num);
         } catch (NumberFormatException e) {
             return "0.75";
@@ -74,14 +94,16 @@ public class Sidebar extends VBox {
 
     }
 
-    public String getDate(){
+    public Date getDate(){
         if (datePicker.getValue()== null){
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
-            return dateFormat.format(date).toString();
+            return date;
         }
 
-        return datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        Date date = Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        return date;
 
     }
 

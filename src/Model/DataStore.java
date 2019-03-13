@@ -11,6 +11,7 @@ public class DataStore {
     DataRoot dataRoot;
     IssueTable issueTable;
 
+
     private ArrayList<Integer> idList = new ArrayList<>();
     private ArrayList<String> nameList = new ArrayList<>();
     private ArrayList<String> isinList = new ArrayList<>();
@@ -36,8 +37,15 @@ public class DataStore {
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 
+    Date date;
+    double givenInterestRate;
 
-    public DataStore() {
+
+
+    public DataStore(Date date, double givenInterestRate) {
+
+        this.date = date;
+        this.givenInterestRate = givenInterestRate;
 
         XMLConverter xc = new XMLConverter();
         Table table = xc.getTable();
@@ -103,7 +111,7 @@ public class DataStore {
             continuousValueList.add(Double.toString(bond.calculateContinuousValue(new Date())));
             irrList.add(Double.toString(getInterestRateByYear(closeOfBusinessDate)));//todo: needs to be added
             durationList.add("0");
-            resaleList.add(Double.toString(bond.calculateResaleValue(new Date())));
+            resaleList.add(Double.toString(bond.calculateResaleValue(date)));
             projection1List.add(dateFormat.format(issueTable.getIssueDate(isin)));
             projection2List.add(String.valueOf(bond.calculateDaysToNextPayment(closeOfBusinessDate)));
         }

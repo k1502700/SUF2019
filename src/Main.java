@@ -10,9 +10,7 @@ import java.util.Date;
 
 public class Main extends Application {
 
-    DataStore dataStore = new DataStore();
-
-    BondTableView scene = new BondTableView(new Group(), dataStore);
+    BondTableView scene = new BondTableView(new Group());
 
     public static void main   (String[] args) {
 
