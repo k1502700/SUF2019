@@ -30,7 +30,7 @@ public class DataRoot {
                     return ir;
                 }
                 catch (Exception e){
-                    System.out.println("Invalid bond name when getting interestrate");
+//                    System.out.println("Invalid bond name when getting interestrate");
                     return 0.0;
                 }
 

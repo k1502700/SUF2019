@@ -41,7 +41,6 @@ public class DataStore {
     double givenInterestRate;
 
 
-
     public DataStore(Date date, double givenInterestRate) {
 
         this.date = date;
@@ -53,6 +52,8 @@ public class DataStore {
         issueTable = xc.getIssueTable();
 
         int id = 0;
+        int counter = 1;
+        int percentage = 10;
         for (Row row : table.getRows()) {
             idList.add(id);
             id++;
@@ -106,15 +107,22 @@ public class DataStore {
             Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon, isIndexLinked, isin, dataRoot, issueTable);
 
 //            double interestRate = dataRoot.getInterestRate(new Date(), isinList.get(0));
-            discreteValueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
+            discreteValueList.add(Double.toString(bond.calculateDiscreteValue(new Date(), coupon / 100)));
 //            discreteValueList.add(Double.toString(dataRoot.getInterestRate(closeOfBusinessDate, isin)));
-            continuousValueList.add(Double.toString(bond.calculateContinuousValue(new Date())));
-            irrList.add(Double.toString(getInterestRateByYear(closeOfBusinessDate)));//todo: needs to be added
+            continuousValueList.add(Double.toString(bond.calculateContinuousValue(new Date(), coupon / 100)));
+            irrList.add(Double.toString(bond.calculateIRRinterestRate(date)));//todo: needs to be added
             durationList.add("0");
             resaleList.add(Double.toString(bond.calculateResaleValue(date)));
             projection1List.add(dateFormat.format(issueTable.getIssueDate(isin)));
             projection2List.add(String.valueOf(bond.calculateDaysToNextPayment(closeOfBusinessDate)));
+
+            if (counter % 500 == 0) {
+                System.out.print(percentage + "% ");
+                percentage+=10;
+            }
+            counter++;
         }
+        System.out.println("100%");
     }
 
 
@@ -125,7 +133,6 @@ public class DataStore {
         for (int i = 0; i < nameList.size(); i++) {
 
             //get bond constructor
-
 
 
             //Bond bond = new Bond(redemptionDateList.get(i), closeOfBusinessDateList.get(i), couponList.get(i));
@@ -144,9 +151,9 @@ public class DataStore {
 
         return bondList;
     }
-    
-    public DisplayBond getSpecificDisplayBond(int id){
-        return new DisplayBond(idList.get(id).toString() , nameList.get(id), discreteValueList.get(id), continuousValueList.get(id), irrList.get(id), durationList.get(id), resaleList.get(id), projection1List.get(id), projection2List.get(id));
+
+    public DisplayBond getSpecificDisplayBond(int id) {
+        return new DisplayBond(idList.get(id).toString(), nameList.get(id), discreteValueList.get(id), continuousValueList.get(id), irrList.get(id), durationList.get(id), resaleList.get(id), projection1List.get(id), projection2List.get(id));
     }
 
     public ArrayList<DisplayBond> getRawBonds() {
@@ -154,13 +161,13 @@ public class DataStore {
         ArrayList<DisplayBond> bondList = new ArrayList<>();
 
         for (int i = 0; i < nameList.size(); i++) {
-            bondList.add(new DisplayBond(idList.get(i).toString(),nameList.get(i), redemptionDateList.get(i).toString(),closeOfBusinessDateList.get(i).toString(),cleanPriceList.get(i), accruedInterestList.get(i), couponList.get(i).toString()));
+            bondList.add(new DisplayBond(idList.get(i).toString(), nameList.get(i), redemptionDateList.get(i).toString(), closeOfBusinessDateList.get(i).toString(), cleanPriceList.get(i), accruedInterestList.get(i), couponList.get(i).toString()));
         }
 
         return bondList;
     }
 
-    public double getInterestRateByYear(Date date){
+    public double getInterestRateByYear(Date date) {
         SimpleDateFormat interestRateFormat = new SimpleDateFormat("yyyy-dd-MMM");
         try {
             Date a = interestRateFormat.parse("2006-3-Aug");
@@ -182,58 +189,58 @@ public class DataStore {
             Date q = interestRateFormat.parse("2018-2-Aug");
             Date r = interestRateFormat.parse("2019-7-Feb");
 
-            if (date.after(r)){
+            if (date.after(r)) {
                 return 0.75;
             }
-            if (date.after(q)){
+            if (date.after(q)) {
                 return 0.75;
             }
-            if (date.after(p)){
+            if (date.after(p)) {
                 return 0.5;
             }
-            if (date.after(o)){
+            if (date.after(o)) {
                 return 0.25;
             }
-            if (date.after(n)){
+            if (date.after(n)) {
                 return 0.5;
             }
-            if (date.after(m)){
+            if (date.after(m)) {
                 return 1;
             }
-            if (date.after(l)){
+            if (date.after(l)) {
                 return 1.5;
             }
-            if (date.after(k)){
+            if (date.after(k)) {
                 return 2;
             }
-            if (date.after(j)){
+            if (date.after(j)) {
                 return 3;
             }
-            if (date.after(i)){
+            if (date.after(i)) {
                 return 4.5;
             }
-            if (date.after(h)){
+            if (date.after(h)) {
                 return 5;
             }
-            if (date.after(g)){
+            if (date.after(g)) {
                 return 5.25;
             }
-            if (date.after(f)){
+            if (date.after(f)) {
                 return 5.5;
             }
-            if (date.after(e)){
+            if (date.after(e)) {
                 return 5.75;
             }
-            if (date.after(d)){
+            if (date.after(d)) {
                 return 5.5;
             }
-            if (date.after(c)){
+            if (date.after(c)) {
                 return 5.25;
             }
-            if (date.after(b)){
+            if (date.after(b)) {
                 return 5;
             }
-            if (date.after(a)){
+            if (date.after(a)) {
                 return 4.75;
             }
             return 5;

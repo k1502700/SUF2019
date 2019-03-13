@@ -40,65 +40,94 @@ public class Bond {
 
     }
 
-    public double calculateDiscreteValue(Date fromDate) {
+    public double calculateDiscreteValue(Date fromDate, double interestRate) {
         if (isIndexLinked) {
-            return calculateDiscreteValueIL(fromDate);
+            return calculateDiscreteValueIL(fromDate, interestRate);
         } else {
-            return calculateDiscreteValueNL(fromDate);
+            return calculateDiscreteValueNL(fromDate, interestRate);
         }
     }
 
-    public double calculateContinuousValue(Date fromDate) {
+    public double calculateContinuousValue(Date fromDate, double interestRate) {
         if (isIndexLinked) {
-            return calculateContinuousValueIL(fromDate);
+            return calculateContinuousValueIL(fromDate, interestRate);
         } else {
-            return calculateContinuousValueNL(fromDate);
+            return calculateContinuousValueNL(fromDate, interestRate);
         }
     }
 
-    public double calculateIRRinterestRate() {
+    public double calculateIRRinterestRate(Date date) {
+        if (coupon == 0) {
+            return 0;
+        }
+        if (date.after(redemptionDate) || calculateTermsRemaining(date) < 1) {
+            return 0;
+        }
+        if (isIndexLinked) {
+            return 0;
+        }
+        double interestRate = 0.0;
         double value = 0.0;
-        int termsRemaining = calculateTermsRemaining(closeOfBusinessDate);
 
+        while (true) {
+            value = calculateDiscreteValue(issueTable.getIssueDate(isin), interestRate);
+            if (value < 1) {
+                return interestRate;
+            }
 
-        return 0.0;
-
+            interestRate += 0.001;
+            if (interestRate > 0.01) {
+                interestRate += 0.01;
+            }
+            if (interestRate > 0.1) {
+                interestRate += 0.1;
+            }
+            if (interestRate > 1) {
+                interestRate += 0.5;
+            }
+            if (interestRate > 100) {
+                interestRate += 5;
+            }
+            if (interestRate > 1000) {
+                return 1000;
+            }
+        }
     }
 
-    private double calculateDiscreteValueNL(Date fromDate) {
+    private double calculateDiscreteValueNL(Date fromDate, double interestRate) {
 
         double value = 0.0;
         int termsRemaining = calculateTermsRemaining(fromDate);
+        double ytm = calculateYieldToMaturity();
         double initialValue = 100;
 
         for (int i = 0; i < totalTerms - termsRemaining; i++) {
-            value += coupon / 2 / Math.pow((1 + interestRate / 2), i+1);
+            value += coupon / 2 / Math.pow((1 + interestRate / 2), i + 1);
         }
         value += initialValue / Math.pow((1 + interestRate / 2), totalTerms);
         return value;
     }
 
-    private double calculateContinuousValueNL(Date fromDate) {//todo: not finished
+    private double calculateContinuousValueNL(Date fromDate, double interestRate) {//todo: not finished
         double value = 0.0;
         int termsRemaining = calculateTermsRemaining(fromDate);
+        double ytm = calculateYieldToMaturity();
         double initialValue = 100;
 
         for (int i = 0; i < totalTerms - termsRemaining; i++) {
-            value += coupon / 2 / Math.pow(Math.E, (interestRate / 2 * (i + 1)));
+            value += interestRate * 100 / 2 / Math.pow(Math.E, (interestRate / 2 * (i + 1)));
         }
         value += initialValue / Math.pow(Math.E, (interestRate / 2 * totalTerms));
         return value;
     }
 
-    private double calculateiFact(Date date) {
-        return dataRoot.getInterestRate(date, this.isin) / dataRoot.getInterestRate(closeOfBusinessDate, isin);
-    }
 
-    private double calculateDiscreteValueIL(Date fromDate) {
+    private double calculateDiscreteValueIL(Date fromDate, double interestRate) {
         double iFact = calculateiFact(fromDate);
         int termsRemaining = calculateTermsRemaining(fromDate);
         double initialValue = 100;
         double couponIL = interestRate * 100 * iFact;
+        double ytm = calculateYieldToMaturity();
         double value = 0.0;
 
         for (int i = 0; i < totalTerms - termsRemaining; i++) {
@@ -109,11 +138,12 @@ public class Bond {
         return value;
     }
 
-    private double calculateContinuousValueIL(Date fromDate) {
+    private double calculateContinuousValueIL(Date fromDate, double interestRate) {
         double iFact = calculateiFact(fromDate);
         int termsRemaining = calculateTermsRemaining(fromDate) / 2;
         double initialValue = 100;
         double couponIL = interestRate * 100 * iFact;
+        double ytm = calculateYieldToMaturity();
         double value = 0.0;
 
         for (int i = 0; i < totalTerms - termsRemaining; i++) {
@@ -123,8 +153,14 @@ public class Bond {
 
         return value;
     }
-//    public double calculate2Macaulay
 
+    private double calculateiFact(Date date) {
+        return dataRoot.getInterestRate(date, this.isin) / dataRoot.getInterestRate(closeOfBusinessDate, isin);
+    }//    public double calculate2Macaulay
+
+    public double calculateYieldToMaturity() {
+        return (coupon + (100 - cleanPrice) / calculateTermDifference(issueTable.getIssueDate(isin), redemptionDate)) / ((100 + cleanPrice) / 2);
+    }
 
     public int calculateTermDifference(Date date1, Date date2) {
 
@@ -196,12 +232,12 @@ public class Bond {
 
     public double calculateResaleValue(Date date) {
 
-        double value = calculateContinuousValue(date);
+        double value = calculateContinuousValue(date, interestRate);
 
         int daysToNextPayment = calculateDaysToNextPayment(date);
 
 
-        double resalevalue = value + ((double) daysToNextPayment/365.0)*coupon;
+        double resalevalue = value + ((double) daysToNextPayment / 365.0) * coupon;
 
         return resalevalue;
     }
@@ -228,11 +264,9 @@ public class Bond {
 
         if (currentDate.after(july)) {
             return nextJan;
-        }
-        else if (currentDate.after(jan)) {
+        } else if (currentDate.after(jan)) {
             return july;
-        }
-        else return jan;
+        } else return jan;
 
     }
 
