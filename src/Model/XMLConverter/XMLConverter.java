@@ -3,15 +3,20 @@ package Model.XMLConverter;
 import com.thoughtworks.xstream.XStream;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.Set;
 
 public class XMLConverter {
     Table table;
     DataRoot dataRoot;
     IssueTable issueTable;
+    String path;
 
     public XMLConverter(){
         convertInterestRates();
@@ -28,9 +33,13 @@ public class XMLConverter {
         xStream.processAnnotations(DataRoot.class);
         xStream.processAnnotations(Sheet.class);
 
+        URL url = getClass().getResource("IndexRatioData.xml");
         String input = "";
+        String urlS = url.toString();
+        urlS = urlS.replace("file:/", "");
+
         try {
-            input = readFile("C:\\Users\\Robert\\IdeaProjects\\SUF2019\\src\\Model\\XMLConverter\\IndexRatioData.xml", StandardCharsets.UTF_8);
+            input = readFile(urlS, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,9 +58,13 @@ public class XMLConverter {
         xStream.processAnnotations(IssueTable.class);
         xStream.processAnnotations(Issue.class);
 
+        URL url = getClass().getResource("GiltsInIssueTruncated.xml");
         String input = "";
+        String urlS = url.toString();
+        urlS = urlS.replace("file:/", "");
+
         try {
-            input = readFile("C:\\Users\\Robert\\IdeaProjects\\SUF2019\\src\\Model\\XMLConverter\\GiltsInIssueTruncated.xml", StandardCharsets.UTF_8);
+            input = readFile(urlS, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,9 +85,13 @@ public class XMLConverter {
         xStream.processAnnotations(Row.class);
         xStream.processAnnotations(Cell.class);
 
+        URL url = getClass().getResource("20190302GiltReferencePrices.xml");
         String input = "";
+        String urlS = url.toString();
+        urlS = urlS.replace("file:/", "");
+
         try {
-            input = readFile("C:\\Users\\Robert\\IdeaProjects\\SUF2019\\src\\Model\\XMLConverter\\20190302GiltReferencePrices.xml", StandardCharsets.UTF_8);
+            input = readFile(urlS, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         }
