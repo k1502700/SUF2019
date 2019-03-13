@@ -1,6 +1,7 @@
 package Model;
 
 import Model.XMLConverter.DataRoot;
+import Model.XMLConverter.IssueTable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,15 +17,17 @@ public class Bond {
     private double interestRate;
     private double coupon;
     private String isin;
+    int totalTerms;
 
     private DataRoot dataRoot;
+    private IssueTable issueTable;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     private SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
     private SimpleDateFormat monthDayFormat = new SimpleDateFormat("MM/dd");
 
 
-    public Bond(Date redemptionDate, Date closeOfBusinessDate, Double coupon, boolean isIndexLinked, String isin, DataRoot dataRoot) {
+    public Bond(Date redemptionDate, Date closeOfBusinessDate, Double coupon, boolean isIndexLinked, String isin, DataRoot dataRoot, IssueTable issueTable) {
         this.redemptionDate = redemptionDate;
         this.closeOfBusinessDate = closeOfBusinessDate;
         this.coupon = coupon;
@@ -32,6 +35,9 @@ public class Bond {
         this.isIndexLinked = isIndexLinked;
         this.isin = isin;
         this.dataRoot = dataRoot;
+        this.issueTable = issueTable;
+        totalTerms = calculateTermDifference(issueTable.getIssueDate(isin), redemptionDate);
+
     }
 
     public double calculateDiscreteValue(Date fromDate) {
@@ -65,10 +71,10 @@ public class Bond {
         int termsRemaining = calculateTermsRemaining(fromDate);
         double initialValue = 100;
 
-        for (int i = 0; i < termsRemaining; i++) {
-            value += coupon / 2 / Math.pow((1 + interestRate / 2), termsRemaining);
+        for (int i = 0; i < totalTerms - termsRemaining; i++) {
+            value += coupon / 2 / Math.pow((1 + interestRate / 2), i+1);
         }
-        value += initialValue / Math.pow((1 + interestRate / 2), termsRemaining);
+        value += initialValue / Math.pow((1 + interestRate / 2), totalTerms);
         return value;
     }
 
@@ -77,10 +83,10 @@ public class Bond {
         int termsRemaining = calculateTermsRemaining(fromDate);
         double initialValue = 100;
 
-        for (int i = 0; i < termsRemaining; i++) {
-            value += coupon / 2 / Math.pow(Math.E, (interestRate / 2 * termsRemaining));
+        for (int i = 0; i < totalTerms - termsRemaining; i++) {
+            value += coupon / 2 / Math.pow(Math.E, (interestRate / 2 * (i + 1)));
         }
-        value += initialValue / Math.pow(Math.E, (interestRate / 2 * termsRemaining));
+        value += initialValue / Math.pow(Math.E, (interestRate / 2 * totalTerms));
         return value;
     }
 
@@ -95,10 +101,10 @@ public class Bond {
         double couponIL = interestRate * 100 * iFact;
         double value = 0.0;
 
-        for (int i = 0; i < termsRemaining; i++) {
-            value += couponIL / 2 / Math.pow(1 + (interestRate / 2), termsRemaining);
+        for (int i = 0; i < totalTerms - termsRemaining; i++) {
+            value += couponIL / 2 / Math.pow(1 + (interestRate / 2), i + 1);
         }
-        value += initialValue / Math.pow(1 + (interestRate / 2), termsRemaining);
+        value += initialValue / Math.pow(1 + (interestRate / 2), totalTerms);
 
         return value;
     }
@@ -110,10 +116,10 @@ public class Bond {
         double couponIL = interestRate * 100 * iFact;
         double value = 0.0;
 
-        for (int i = 0; i < termsRemaining; i++) {
-            value += couponIL / 2 / Math.pow(Math.E, (interestRate / 2) * termsRemaining);
+        for (int i = 0; i < totalTerms - termsRemaining; i++) {
+            value += couponIL / 2 / Math.pow(Math.E, (interestRate / 2) * i + 1);
         }
-        value += initialValue / Math.pow(Math.E, (interestRate / 2) * termsRemaining);
+        value += initialValue / Math.pow(Math.E, (interestRate / 2) * totalTerms);
 
         return value;
     }
