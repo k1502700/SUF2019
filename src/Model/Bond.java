@@ -246,7 +246,7 @@ public class Bond {
         int currentterm = calculateTermsPassed(date);
         double sum = 0.0;
         int maxterm = calculateTermDifference(issueTable.getIssueDate(isin), redemptionDate);
-        double value = calculateDiscreteValue(date);
+        double value = calculateDiscreteValue(date, interestRate);
         for (double i = 1.0; i <= currentterm; i+=1.0) {
             double ff = (coupon/2 * i)/Math.pow(1.0+interestRate/2,i) +(((double) maxterm)*100.0)/Math.pow(1.0+interestRate/2, (double) maxterm);
             double result = ff/value;
