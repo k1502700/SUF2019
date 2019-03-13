@@ -198,7 +198,9 @@ public class Bond {
 
         double value = calculateContinuousValue(date);
 
-        //TODO: calculate days from date until next coupon payment
+        int daysToNextPayment = calculateDaysToNextPayment(date);
+
+        //todo: write method
 
         double resalevalue = 1.1;
 
