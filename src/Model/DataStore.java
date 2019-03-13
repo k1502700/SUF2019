@@ -111,7 +111,7 @@ public class DataStore {
 //            discreteValueList.add(Double.toString(dataRoot.getInterestRate(closeOfBusinessDate, isin)));
             continuousValueList.add(Double.toString(bond.calculateContinuousValue(new Date(), coupon / 100)));
             irrList.add(Double.toString(bond.calculateIRRinterestRate(date)));//todo: needs to be added
-            durationList.add("0");
+            durationList.add(Double.toString(bond.calculateMacDuration(getInterestRateByYear(date), date)));
             resaleList.add(Double.toString(bond.calculateResaleValue(date)));
             projection1List.add(dateFormat.format(issueTable.getIssueDate(isin)));
             projection2List.add(String.valueOf(bond.calculateDaysToNextPayment(closeOfBusinessDate)));
