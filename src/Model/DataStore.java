@@ -25,8 +25,8 @@ public class DataStore {
 
     private ArrayList<Double> couponList = new ArrayList<>();
 
-    private ArrayList<String> disvalueList = new ArrayList<>();//todo: needs to be calculated
-    private ArrayList<String> contvalueList = new ArrayList<>();//todo: needs to be calculated
+    private ArrayList<String> discreteValueList = new ArrayList<>();//todo: needs to be calculated
+    private ArrayList<String> continuousValueList = new ArrayList<>();//todo: needs to be calculated
     private ArrayList<String> irrList = new ArrayList<>();//todo: needs to be calculated
     private ArrayList<String> durationList = new ArrayList<>();//todo: needs to be calculated
     private ArrayList<String> resaleList = new ArrayList<>();//todo: needs to be calculated
@@ -98,9 +98,9 @@ public class DataStore {
             Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon, isIndexLinked, isin, dataRoot, issueTable);
 
 //            double interestRate = dataRoot.getInterestRate(new Date(), isinList.get(0));
-            disvalueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
-//            disvalueList.add(Double.toString(dataRoot.getInterestRate(closeOfBusinessDate, isin)));
-            contvalueList.add(Double.toString(bond.calculateContinuousValue(new Date())));
+            discreteValueList.add(Double.toString(bond.calculateDiscreteValue(new Date())));
+//            discreteValueList.add(Double.toString(dataRoot.getInterestRate(closeOfBusinessDate, isin)));
+            continuousValueList.add(Double.toString(bond.calculateContinuousValue(new Date())));
             irrList.add(Double.toString(getInterestRateByYear(closeOfBusinessDate)));//todo: needs to be added
             durationList.add("0");
             resaleList.add(Double.toString(bond.calculateResaleValue(new Date())));
@@ -131,14 +131,14 @@ public class DataStore {
 //            System.out.print("");
 //            bondList.add(new DisplayBond(nameList.get(i), dateFormat.format(closeOfBusinessDateList.get(i)), dateFormat.format(redemptionDateList.get(i)), "", Integer.toString(bond.calculateTermsPassedToday()), idList.get(i).toString() , Double.toString(bond.calculateDiscreteValue(closeOfBusinessDateList.get(i)))));
 
-            bondList.add(new DisplayBond(idList.get(i).toString(), nameList.get(i), disvalueList.get(i), contvalueList.get(i), irrList.get(i), durationList.get(i), resaleList.get(i), projection1List.get(i), projection2List.get(i)));
+            bondList.add(new DisplayBond(idList.get(i).toString(), nameList.get(i), discreteValueList.get(i), continuousValueList.get(i), irrList.get(i), durationList.get(i), resaleList.get(i), projection1List.get(i), projection2List.get(i)));
         }
 
         return bondList;
     }
     
     public DisplayBond getSpecificDisplayBond(int id){
-        return new DisplayBond(idList.get(id).toString() , nameList.get(id), disvalueList.get(id), contvalueList.get(id), irrList.get(id), durationList.get(id), resaleList.get(id), projection1List.get(id), projection2List.get(id));
+        return new DisplayBond(idList.get(id).toString() , nameList.get(id), discreteValueList.get(id), continuousValueList.get(id), irrList.get(id), durationList.get(id), resaleList.get(id), projection1List.get(id), projection2List.get(id));
     }
 
     public ArrayList<DisplayBond> getRawBonds() {
