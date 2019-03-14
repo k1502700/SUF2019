@@ -56,6 +56,16 @@ public class Bond {
         }
     }
 
+    public double calculateBootstrappedValue(Date date){
+        int terms = calculateTermsRemaining(date);
+        double sumValue = 0.0;
+        for (int i = 1; i < terms; i++){
+            sumValue += coupon/Math.pow(1 + calculateYieldToDate(date), i);
+        }
+
+        return Math.sqrt((100 + coupon)/(100 - sumValue)) - 1;
+    }
+
     public double calculateIRRinterestRate(Date date) {
         if (coupon == 0) {
             return 0;
@@ -158,8 +168,12 @@ public class Bond {
         return dataRoot.getInterestRate(date, this.isin) / dataRoot.getInterestRate(closeOfBusinessDate, isin);
     }//    public double calculate2Macaulay
 
+    public double calculateYieldToDate(Date toDate){
+        return (coupon + (100 - cleanPrice) / calculateTermDifference(issueTable.getIssueDate(isin), toDate)) / ((100 + cleanPrice) / 2);
+    }
+
     public double calculateYieldToMaturity() {
-        return (coupon + (100 - cleanPrice) / calculateTermDifference(issueTable.getIssueDate(isin), redemptionDate)) / ((100 + cleanPrice) / 2);
+        return calculateYieldToDate(redemptionDate);
     }
 
     public int calculateTermDifference(Date date1, Date date2) {

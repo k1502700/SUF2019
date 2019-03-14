@@ -35,8 +35,9 @@ public class DataStore {
     private ArrayList<String> projection1List = new ArrayList<>();//todo: needs to be calculated
     private ArrayList<String> projection2List = new ArrayList<>();//todo: needs to be calculated
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    private SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+    private SimpleDateFormat monthDayFormat = new SimpleDateFormat("MM/dd");
 
     Date date;
     double givenInterestRate;
@@ -106,16 +107,25 @@ public class DataStore {
 
             //todo: Create Bond here
             Bond bond = new Bond(redemptionDate, closeOfBusinessDate, coupon, isIndexLinked, isin, dataRoot, issueTable);
-
-//            double interestRate = dataRoot.getInterestRate(new Date(), isinList.get(0));
+            String y1 = Integer.toString(Integer.parseInt(yearFormat.format(date)) + 1);
+            String y2 = Integer.toString(Integer.parseInt(yearFormat.format(date)) + 2);
+            String tempMd = monthDayFormat.format(date);
+            Date bootstrap1 = new Date();
+            Date bootstrap2 = new Date();
+            try {
+                bootstrap1 = dateFormat.parse(tempMd + "/" + y1);
+                bootstrap2 = dateFormat.parse(tempMd + "/" + y2);
+            }
+            catch (ParseException e){
+                System.out.println("error handling bootstrap dates");
+            }
             discreteValueList.add(Double.toString(bond.calculateDiscreteValue(new Date(), coupon / 100)));
-//            discreteValueList.add(Double.toString(dataRoot.getInterestRate(closeOfBusinessDate, isin)));
             continuousValueList.add(Double.toString(bond.calculateContinuousValue(new Date(), coupon / 100)));
             irrList.add(Double.toString(bond.calculateIRRinterestRate(date)));//todo: needs to be added
             durationList.add(Double.toString(bond.calculateMacDuration(getInterestRateByYear(date), date)));
             resaleList.add(Double.toString(bond.calculateResaleValue(date)));
-            projection1List.add(dateFormat.format(issueTable.getIssueDate(isin)));
-            projection2List.add(String.valueOf(bond.calculateDaysToNextPayment(closeOfBusinessDate)));
+            projection1List.add(Double.toString(bond.calculateBootstrappedValue(bootstrap1)));
+            projection2List.add(Double.toString(bond.calculateBootstrappedValue(bootstrap2)));
 
             if (counter % 500 == 0) {
                 System.out.print(percentage + "% ");
