@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.Bond;
 import Model.XMLConverter.*;
 
 import java.text.ParseException;

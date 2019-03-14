@@ -1,4 +1,4 @@
-package Model;
+package Controller;
 
 import Model.XMLConverter.DataRoot;
 import Model.XMLConverter.IssueTable;
