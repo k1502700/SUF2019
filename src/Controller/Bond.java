@@ -2,10 +2,11 @@ package Controller;
 
 import Model.XMLConverter.DataRoot;
 import Model.XMLConverter.IssueTable;
+import com.thoughtworks.xstream.benchmark.jmh.Base64Benchmark;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Bond {
@@ -56,14 +57,14 @@ public class Bond {
         }
     }
 
-    public double calculateBootstrappedValue(Date date){
+    public double calculateBootstrappedValue(Date date) {
         int terms = calculateTermsRemaining(date);
         double sumValue = 0.0;
-        for (int i = 1; i < terms; i++){
-            sumValue += coupon/Math.pow(1 + calculateYieldToDate(date), i);
+        for (int i = 1; i < terms; i++) {
+            sumValue += coupon / Math.pow(1 + calculateYieldToDate(date), i);
         }
 
-        return Math.sqrt((100 + coupon)/(100 - sumValue)) - 1;
+        return Math.sqrt((100 + coupon) / (100 - sumValue)) - 1;
     }
 
     public double calculateIRRinterestRate(Date date) {
@@ -168,13 +169,41 @@ public class Bond {
         return dataRoot.getInterestRate(date, this.isin) / dataRoot.getInterestRate(closeOfBusinessDate, isin);
     }//    public double calculate2Macaulay
 
-    public double calculateYieldToDate(Date toDate){
+    public double calculateYieldToDate(Date toDate) {
         return (coupon + (100 - cleanPrice) / calculateTermDifference(issueTable.getIssueDate(isin), toDate)) / ((100 + cleanPrice) / 2);
     }
 
     public double calculateYieldToMaturity() {
         return calculateYieldToDate(redemptionDate);
     }
+
+    public double calculateYield(Date date, double interestRate) {
+        return coupon / calculateDiscreteValue(date, interestRate);
+    }
+
+    public  LinkedHashMap<Integer, Double> calculateYieldList(Date date) {
+        Date issuedate = issueTable.getIssueDate(isin);
+        int termspassed = calculateTermsPassed(date);
+        int diff = calculateTermDifference(issueTable.getIssueDate(isin), date)/2;
+
+        LinkedHashMap<Integer, Double> data = new LinkedHashMap<>();
+
+        for (int i = 1; i <= diff; i++) { //twaek this
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(issuedate);
+            int a = cal.get(Calendar.YEAR);
+            Date mdate = new GregorianCalendar(a + i, Calendar.JANUARY, 22).getTime();
+
+            int gooddate = a+i;
+
+            data.put(gooddate, calculateYieldToDate(mdate));
+
+        }
+
+        return data;
+
+    }
+
 
     public int calculateTermDifference(Date date1, Date date2) {
 
@@ -256,15 +285,15 @@ public class Bond {
         return resalevalue;
     }
 
-    public double calculateMacDuration(double interestRate, Date date){
+    public double calculateMacDuration(double interestRate, Date date) {
         int currentterm = calculateTermsPassed(date);
         double sum = 0.0;
         int maxterm = calculateTermDifference(issueTable.getIssueDate(isin), redemptionDate);
         double value = calculateDiscreteValue(date, interestRate);
-        for (double i = 1.0; i <= currentterm; i+=1.0) {
-            double ff = (coupon/2 * i)/Math.pow(1.0+interestRate/2,i) +(((double) maxterm)*100.0)/Math.pow(1.0+interestRate/2, (double) maxterm);
-            double result = ff/value;
-            sum+=result;
+        for (double i = 1.0; i <= currentterm; i += 1.0) {
+            double ff = (coupon / 2 * i) / Math.pow(1.0 + interestRate / 2, i) + (((double) maxterm) * 100.0) / Math.pow(1.0 + interestRate / 2, (double) maxterm);
+            double result = ff / value;
+            sum += result;
         }
 
         return sum;
@@ -313,7 +342,14 @@ public class Bond {
     public int calculateTermsPassedToday() {
         return calculateTermsPassed(new Date());
     }
+
+
+    @Override
+    public String toString() {
+        return isin;
+    }
 }
+
 
 
 

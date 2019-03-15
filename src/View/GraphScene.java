@@ -1,5 +1,7 @@
 package View;
 
+import Controller.Bond;
+import Model.DataStore;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -7,10 +9,18 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class GraphScene extends Scene {
 
-    public GraphScene(Parent root) {
+    ArrayList<String> bondids;
+
+    public GraphScene(Parent root, ArrayList<String> bondids, DataStore dataStore) {
         super(root);
+        this.bondids= bondids;
 
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -19,25 +29,29 @@ public class GraphScene extends Scene {
         final LineChart<Number,Number> lineChart =
                 new LineChart<Number,Number>(xAxis,yAxis);
 
-        lineChart.setTitle("Bond Data Display");
-        //defining a series
-        XYChart.Series series = new XYChart.Series();
-        series.setName("Bond 1");
-        //populating the series with data
-        series.getData().add(new XYChart.Data(1, 23));
-        series.getData().add(new XYChart.Data(2, 14));
-        series.getData().add(new XYChart.Data(3, 15));
-        series.getData().add(new XYChart.Data(4, 24));
-        series.getData().add(new XYChart.Data(5, 34));
-        series.getData().add(new XYChart.Data(6, 36));
-        series.getData().add(new XYChart.Data(7, 22));
-        series.getData().add(new XYChart.Data(8, 45));
-        series.getData().add(new XYChart.Data(9, 43));
-        series.getData().add(new XYChart.Data(10, 17));
-        series.getData().add(new XYChart.Data(11, 29));
-        series.getData().add(new XYChart.Data(12, 25));
+        xAxis.setAutoRanging(false);
+        xAxis.setLowerBound(2010);
+        xAxis.setUpperBound(2020);
+        xAxis.setTickUnit(1);
 
-        lineChart.getData().add(series);
+
+        for (int i = 0; i <bondids.size() ; i++) {
+            Bond b = dataStore.getSpecificBond(Integer.parseInt(bondids.get(i)));
+
+            LinkedHashMap<Integer, Double> hashlist = b.calculateYieldList(new Date());
+
+            XYChart.Series series = new XYChart.Series();
+            series.setName(b.toString());
+
+            for (Map.Entry<Integer, Double> entry : hashlist.entrySet()) {
+                Integer key = entry.getKey();
+                Double value = entry.getValue();
+                series.getData().add(new XYChart.Data(key, value));
+            }
+            lineChart.getData().add(series);
+
+
+        }
 
         ((Group) this.getRoot()).getChildren().addAll(lineChart);
     }

@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -60,37 +61,31 @@ public class BondTableView extends Scene {
                 SelectionMode.MULTIPLE
         );
 
-        Button button2 = new Button("GetSelection");
-
         Button button3 = new Button("Graph");
 
         button3.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+
+                ObservableList selectedItems = detailsTable.getTable().getSelectionModel().getSelectedItems();
+                ArrayList<String> bondids = new ArrayList<>();
+
+                for (int i = 0; i < selectedItems.size(); i++) {
+                    DisplayBond displayBond = (DisplayBond) selectedItems.get(i);
+                   bondids.add(displayBond.getId());
+                }
+
                 Stage stage = new Stage();
                 stage.setTitle("My New Stage Title");
-                GraphScene graphScene = new GraphScene(new Group());
+                GraphScene graphScene = new GraphScene(new Group(),bondids, dataStore);
                 stage.setScene(graphScene);
                 stage.show();
             }
         });
 
-        button2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-
-                ObservableList selectedItems = detailsTable.getTable().getSelectionModel().getSelectedItems();
-
-                for (int i = 0; i < selectedItems.size(); i++) {
-                    DisplayBond displayBond = (DisplayBond) selectedItems.get(i);
-                    System.out.println(displayBond.getName());
-                }
-
-            }
-        });
 
         HBox botbuts = new HBox();
 
-        botbuts.getChildren().addAll(button2, button3);
+        botbuts.getChildren().addAll( button3);
 
         bp.setBottom(botbuts);
 

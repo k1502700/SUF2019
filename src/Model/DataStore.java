@@ -35,6 +35,7 @@ public class DataStore {
     private ArrayList<String> projection1List = new ArrayList<>();//todo: needs to be calculated
     private ArrayList<String> projection2List = new ArrayList<>();//todo: needs to be calculated
 
+
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     private SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
     private SimpleDateFormat monthDayFormat = new SimpleDateFormat("MM/dd");
@@ -165,6 +166,10 @@ public class DataStore {
 
     public DisplayBond getSpecificDisplayBond(int id) {
         return new DisplayBond(idList.get(id).toString(), nameList.get(id), discreteValueList.get(id), continuousValueList.get(id), irrList.get(id), durationList.get(id), resaleList.get(id), projection1List.get(id), projection2List.get(id));
+    }
+
+    public Bond getSpecificBond(int id) {
+        return new Bond(redemptionDateList.get(id), closeOfBusinessDateList.get(id), couponList.get(id), isIndexLinkedList.get(id), isinList.get(id), dataRoot, issueTable);
     }
 
     public ArrayList<DisplayBond> getRawBonds() {

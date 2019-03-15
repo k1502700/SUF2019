@@ -41,7 +41,7 @@ public class DetailsTable extends VBox {
         bondIRR.setCellValueFactory(
                 new PropertyValueFactory<DisplayBond, String>("irr"));
 
-        TableColumn bondDuration = new TableColumn("Duration");
+        TableColumn bondDuration = new TableColumn("Macaley Duration");
         bondDuration.setCellValueFactory(
                 new PropertyValueFactory<DisplayBond, String>("duration"));
 
@@ -64,7 +64,7 @@ public class DetailsTable extends VBox {
 
 
         bondtable.setPrefHeight(500);
-        bondtable.setPrefWidth(900);
+        bondtable.setPrefWidth(1000);
 
 
         bondtable.setItems(data);

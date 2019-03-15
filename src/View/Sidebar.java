@@ -44,8 +44,8 @@ public class Sidebar extends VBox {
         Label interestRate = new Label("Interest Rates:");
          interestbox = new TextField ();
 
-        Label indexvalue = new Label("Index Value:");
-         indexbox = new TextField ();
+//        Label indexvalue = new Label("Index Value:");
+//         indexbox = new TextField ();
 
         Label date = new Label("Date:");
          datePicker = new DatePicker();
@@ -67,7 +67,7 @@ public class Sidebar extends VBox {
 
 
 
-        vbox.getChildren().addAll(interestRate, interestbox, indexvalue, indexbox, date, datePicker, recalc);
+        vbox.getChildren().addAll(interestRate, interestbox, date, datePicker, recalc);
 
 
         this.getChildren().add(vbox);
