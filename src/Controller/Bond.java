@@ -57,8 +57,8 @@ public class Bond {
         }
     }
 
-    public double calculateBootstrappedValue(Date date) {
-        int terms = calculateTermsRemaining(date);
+    public double calculateBootstrappedValue(Date date){
+        int terms = calculateTermDifference(new Date(), date);
         double sumValue = 0.0;
         for (int i = 1; i < terms; i++) {
             sumValue += coupon / Math.pow(1 + calculateYieldToDate(date), i);
@@ -67,11 +67,25 @@ public class Bond {
         return Math.sqrt((100 + coupon) / (100 - sumValue)) - 1;
     }
 
-    public double calculateIRRinterestRate(Date date) {
+    public double calculateIRR(Date date){
+        if (isIndexLinked){
+            return 0;
+        }
+        int terms = calculateTermDifference(issueTable.getIssueDate(isin), redemptionDate);
+        double value = 0.0;
+        double r = calculateIRRInterestRate();
+        for (int i  = 1; i <= terms; i++){
+            value += coupon*i/Math.pow(1 + r, i);
+        }
+        value -= 100;
+        return value;
+    }
+
+    public double calculateIRRInterestRate() {
         if (coupon == 0) {
             return 0;
         }
-        if (date.after(redemptionDate) || calculateTermsRemaining(date) < 1) {
+        if (new Date().after(redemptionDate) || calculateTermsRemaining(new Date()) < 1) {
             return 0;
         }
         if (isIndexLinked) {

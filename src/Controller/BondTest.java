@@ -56,7 +56,7 @@ public class BondTest {
 
     @org.junit.Test
     public void calculateIRRinterestRateTest() throws Exception {
-        assert testBond.calculateIRRinterestRate(date) == 0.652;
+        assert testBond.calculateIRRInterestRate() == 0.652;
     }
 
     @org.junit.Test
